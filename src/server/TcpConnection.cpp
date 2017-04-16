@@ -44,9 +44,7 @@ bool TcpConnection::getc(unsigned char* c)
 
 void TcpConnection::putc(unsigned char c)
 {
-	if (write(m_master, &c, 1) != 1)
-		return false;
-	return true;
+	write(m_master, &c, 1);
 }
 
 void TcpConnection::puts(std::string const& str)
