@@ -49,7 +49,7 @@ void TcpConnection::putc(unsigned char c)
 
 void TcpConnection::puts(std::string const& str)
 {
-	write(m_master, str.c_string(), str.size());
+	write(m_master, str.c_str(), str.size());
 }
 
 void TcpConnection::putbuf(void const* buf, size_t bufsize)
