@@ -31,9 +31,10 @@ Server::Server(Config const& config) : m_config(config)
     throw TodoError("2", "Server constructor/connecting to a socket");
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) perror("error creating mastersocket");
-    const struct sockaddr_in addr;
+    struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
-    int error = bind(m_master, &addr, sizeof(addr));
+    int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
+    if (error == -1) perror("error binding address to mastersocket");
     printf("%d\n", error); 
 }
 
