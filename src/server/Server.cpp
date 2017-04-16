@@ -29,6 +29,11 @@
 Server::Server(Config const& config) : m_config(config)
 {
     throw TodoError("2", "Server constructor/connecting to a socket");
+    m_master = socket(AF_INET, SOCK_STREAM, 0);
+    if (m_master == -1) error("error creating mastersocket");
+    struct sockaddr_in addr;
+    int error = bind(m_master, &addr, sizeof(addr));
+    
 }
 
 void Server::run_linear() const
@@ -134,3 +139,4 @@ Server::~Server() noexcept
         d_error("Could not close master socket");
     }
 }
+
