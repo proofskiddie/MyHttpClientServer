@@ -37,7 +37,7 @@ void TcpConnection::shutdown()
 
 bool TcpConnection::getc(unsigned char* c)
 {
-	if (*c = fgetc(m_master) == EOF)
+	if (read(m_master, c, 1) != 1)
 		return false;
 	return true;
 }
