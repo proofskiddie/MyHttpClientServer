@@ -44,15 +44,17 @@ bool TcpConnection::getc(unsigned char* c)
 
 void TcpConnection::putc(unsigned char c)
 {
-    throw TodoError("2", "You need to implement writing characters to connections");
+	if (write(m_master, &c, 1) != 1)
+		return false;
+	return true;
 }
 
 void TcpConnection::puts(std::string const& str)
 {
-    throw TodoError("2", "You need to implement writing strings to connections");
+	write(m_master, str.c_string(), str.size());
 }
 
 void TcpConnection::putbuf(void const* buf, size_t bufsize)
 {
-    throw TodoError("2", "You need to implement writing buffers to connections");
+	write(m_master, buf, bufsize);
 }
