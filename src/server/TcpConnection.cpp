@@ -16,7 +16,7 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_master(master_fd),
     m_shutdown(false)
 {
-    throw TodoError("2", "You need to implement construction of TcpConnections");
+    accept(m_master, NULL, 0);
 }
 
 TcpConnection::~TcpConnection() noexcept
@@ -37,7 +37,9 @@ void TcpConnection::shutdown()
 
 bool TcpConnection::getc(unsigned char* c)
 {
-    throw TodoError("2", "You have to implement reading from connections");
+	if (*c = fgetc(m_master) == EOF)
+		return false;
+	return true;
 }
 
 void TcpConnection::putc(unsigned char c)
