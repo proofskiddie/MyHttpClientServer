@@ -32,6 +32,7 @@ Server::Server(Config const& config) : m_config(config)
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) perror("error creating mastersocket");
     const struct sockaddr_in addr;
+    memset(&addr, 0, sizeof(addr));
     int error = bind(m_master, &addr, sizeof(addr));
     printf("%d\n", error); 
 }
