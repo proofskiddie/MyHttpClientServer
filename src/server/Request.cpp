@@ -76,7 +76,7 @@ void Request::parse_body()
 std::string Request::parse_raw_line()
 {
 	unsigned char c;
-	std::string s();
+	std::string s;
 	while (m_conn.getc(&c))
 		s.append((char)c);
 	return s;
