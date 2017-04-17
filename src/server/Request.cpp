@@ -78,7 +78,7 @@ std::string Request::parse_raw_line()
 	unsigned char c;
 	std::string s();
 	while (m_conn.getc(&c))
-		s.push_back(c);
+		s.push_back((char)c);
 	return s;
 }
 
