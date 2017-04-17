@@ -15,13 +15,18 @@
 #include "error/RequestError.hpp"
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
-
+#include "../parse/lex.yy.c"
+#include "../parse/y.tab.c"
 
 Request::Request(Config const& config, TcpConnection& conn) :
     m_config(config),
     m_conn(conn)
 {
     std::string request_line = parse_raw_line();
+    yy_scan_string(request_line);
+    yylex();
+    yyparse();
+    yy_delete_buffer(YY_CURRENT_BUFFER);
     parse_method(request_line);
     parse_route(request_line);
     parse_version(request_line);
@@ -70,7 +75,11 @@ void Request::parse_body()
 
 std::string Request::parse_raw_line()
 {
-    throw TodoError("2", "You need to implement line fetching");
+	int c;
+	std::string s();
+	while (m_conn.getc(&c))
+		s += c;
+	return s;
 }
 
 void Request::print() const noexcept
