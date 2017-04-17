@@ -27,9 +27,10 @@ Request::Request(Config const& config, TcpConnection& conn) :
     yylex();
     yyparse();
     yy_delete_buffer(YY_CURRENT_BUFFER);
-    parse_method(request_line);
-    parse_route(request_line);
-    parse_version(request_line);
+    
+    //parse_method(request_line);
+    //parse_route(request_line);
+    //parse_version(request_line);
 
     // the previous three parse_* calls should consume the entire line
     if (!request_line.empty())
@@ -37,8 +38,8 @@ Request::Request(Config const& config, TcpConnection& conn) :
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
 
-    parse_headers();
-    parse_body();
+    //parse_headers();
+    //parse_body();
 }
 
 void Request::parse_method(std::string& raw_line)

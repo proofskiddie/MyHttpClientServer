@@ -38,6 +38,7 @@ public:
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
     std::unordered_map<std::string, std::string> const& get_query() const noexcept;
     std::unordered_map<std::string, std::string> const& get_body() const noexcept;
+    static Request _currentRequest;
 private:
     Config const& m_config;
     TcpConnection& m_conn;
@@ -48,7 +49,6 @@ private:
     std::string m_method;
     std::string m_version;
     int const m_max_buf = 512;
-
     /**
      * We think its useful to break up the parsing of the method, path, version, and headers
      * into separate methods (also query and body data for the extra credit)
