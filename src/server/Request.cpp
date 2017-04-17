@@ -23,7 +23,7 @@ Request::Request(Config const& config, TcpConnection& conn) :
     m_conn(conn)
 {
     std::string request_line = parse_raw_line();
-    yy_scan_string(request_line);
+    yy_scan_string(request_line.c_str());
     yylex();
     yyparse();
     yy_delete_buffer(YY_CURRENT_BUFFER);
