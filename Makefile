@@ -37,7 +37,7 @@ prelude:
 	@mkdir -p $(EXEC_DIR)
 
 yacc: 
-	yacc $(SOURCE_DIR)/$(PARSE_DIR)/http.y -d
+	yacc $(SOURCE_DIR)/$(PARSE_DIR)/http.y -d -lfl
 	mv ./y.tab.h $(SOURCE_DIR)/$(PARSE_DIR)/
 	mv ./y.tab.c $(SOURCE_DIR)/$(PARSE_DIR)/
 lex:
