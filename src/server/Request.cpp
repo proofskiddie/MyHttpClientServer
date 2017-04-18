@@ -27,7 +27,7 @@ Request::Request(Config *config, TcpConnection *conn)
     yylex();
     yyparse();
     
-    std::cout << m_header << std::endl; 
+    std::cout << m_path << std::endl; 
 
     yy_delete_buffer(YY_CURRENT_BUFFER);
     //parse_method(request_line);
