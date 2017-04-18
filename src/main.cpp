@@ -3,6 +3,7 @@
 
 #include "Config.hpp"
 #include "server/Server.hpp"
+#include "server/Request.hpp"
 #include "controller/SendFileController.hpp"
 #include "controller/TextController.hpp"
 #include "error/ConfigError.hpp"
@@ -19,7 +20,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-	Server::server = new Server(&config);
+	server = new Server(&config);
         config.print();
 
         if (config.mode == Config::SM_LINEAR)
