@@ -13,8 +13,8 @@
 
 class Server {
 private:
-    Config *m_config;
-    int m_master;
+    Config const& m_config;
+    int m_master; 
     /*
      * :: TODO ::
      * Each of the run* functions below use common logic for handling connected requests,
@@ -22,15 +22,14 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
-    static Server server;
-    Request *req; 
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
      * such as a connection to the internet.
     **/
-    Server();
-    void set_config(Config *);
+    Request *req;
+    Server(Config const& config);
+
     /**
      * :: TODO ::
      * The server destructor should release resources acquired in the constructor.

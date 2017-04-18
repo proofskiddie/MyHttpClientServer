@@ -10,7 +10,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server Server::server;
+Server *server;
 
 int main(int argc, char** argv)
 {
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        Server::server.set_config(&config);
+        server = new Server(config);
 
         config.print();
 
@@ -64,6 +64,6 @@ int main(int argc, char** argv)
     {
         std::cerr << "Unknown error: " << e.what() << std::endl;
     }
-
+    delete server;
     return 1;
 }

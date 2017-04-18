@@ -26,8 +26,9 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server::Server()
+Server::Server(Config const& config) : m_config(config)
 {
+    throw TodoError("2", "Server constructor/connecting to a socket");
     
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) perror("error creating mastersocket");
@@ -40,20 +41,16 @@ Server::Server()
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
     if (error == -1) perror("error binding address to mastersocket");
-    error = listen(m_master, m_config->queue_length);
+    error = listen(m_master, config.queue_length);
     
 }
 
-void Server::set_config(Config *config) {
-	m_config = config;
-}
-
-void Server::run_linear() //const
+void Server::run_linear() const
 {
     while (true)
     {
         std::string response;
-        TcpConnection* conn = new TcpConnection(*m_config, m_master);
+        TcpConnection* conn = new TcpConnection(m_config, m_master);
 
         handle(conn);
 
@@ -61,71 +58,71 @@ void Server::run_linear() //const
     }
 }
 
-void Server::run_thread_request() //const
+void Server::run_thread_request() const
 {
     throw TodoError("3", "You need to implement thread-per-request mode");
 }
 
-void Server::run_fork() //const
+void Server::run_fork() const
 {
     throw TodoError("3", "You need to implement process-per-request mode");
 }
 
-void Server::run_thread_pool() //const
+void Server::run_thread_pool() const
 {
     throw TodoError("3", "You need to implement thread-pool mode");
 }
 
-void Server::handle(TcpConnection* conn) //const /*hope this dosent break the thing */
+void Server::handle(TcpConnection* conn) //const
 {
-    req = new Request(m_config, conn);
+    _currentRequest = new Request(m_config, conn);
     Controller const* controller = nullptr;
 
     try
     {
         // creating res as an empty response
-        Response res(*m_config, *conn);
+        Response res(m_config, *conn);
 
         // Printing the request will be helpful to tell what our server is seeing
-        req->print();
+        req.print();
 
-        std::string path = req->get_path();
+        std::string path = req.get_path();
 
         // This will route a request to the right controller
         // You only need to change this if you rename your controllers or add more routes
         if (path == "/hello-world")
         {
-            controller = new TextController(*m_config, "Hello world!\n");
+            controller = new TextController(m_config, "Hello world!\n");
         }
         else if (path.find("/script") == 0)
         {
-            controller = new ExecScriptController(*m_config, "/script");
+            controller = new ExecScriptController(m_config, "/script");
         }
         else
         {
-            controller = new SendFileController(*m_config);
+            controller = new SendFileController(m_config);
         }
 
         // Whatever controller we picked needs to be run with the given request and response
-        controller->run(*req, res);
+        controller->run(req, res);
     }
     catch (RequestError const& e)
     {
         d_warnf("Error parsing request: %s", e.what());
         
-        Controller::send_error_response(*m_config, conn, e.status, "Error while parsing request\n");
+        Controller::send_error_response(m_config, conn, e.status, "Error while parsing request\n");
     }
     catch (ControllerError const& e)
     {
         d_warnf("Error while handling request: %s", e.what());
 
-        Controller::send_error_response(*m_config, conn, HttpStatus::InternalServerError, "Error while handling request\n");
+        Controller::send_error_response(m_config, conn, HttpStatus::InternalServerError, "Error while handling request\n");
     }
     catch (ResponseError const& e)
     {
         d_warnf("Error while creating response: %s", e.what());
 
-        Controller::send_error_response(*m_config, conn, HttpStatus::InternalServerError, "Error while handling response\n");
+        Controller::send_error_response(m_config, conn, HttpStatus::InternalServerError, "Error while handling response\n");
     }
     catch (ConnectionError const& e)
     {
@@ -139,7 +136,7 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
 
     // Dont forget about freeing memory!
     delete controller;
-    delete req;
+    delete _currentRequest;
 }
 
 Server::~Server() noexcept
