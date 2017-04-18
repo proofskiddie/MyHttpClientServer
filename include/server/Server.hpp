@@ -15,7 +15,6 @@ class Server {
 private:
     Config const& m_config;
     int m_master;
-    Request *_currentRequest; 
     /*
      * :: TODO ::
      * Each of the run* functions below use common logic for handling connected requests,
@@ -23,6 +22,7 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
+    Request *_currentRequest; 
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
