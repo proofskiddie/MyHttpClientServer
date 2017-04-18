@@ -73,7 +73,7 @@ void Server::run_thread_pool() const
     throw TodoError("3", "You need to implement thread-pool mode");
 }
 
-void Server::handle(TcpConnection* conn) const
+void Server::handle(TcpConnection* conn) //const /*hope this dosent break the thing */
 {
     _currentRequest = new Request(m_config, conn);
     Controller const* controller = nullptr;
@@ -84,7 +84,7 @@ void Server::handle(TcpConnection* conn) const
         Response res(m_config, *conn);
 
         // Printing the request will be helpful to tell what our server is seeing
-        req.print();
+        _currentRequest.print();
 
         std::string path = req.get_path();
 
