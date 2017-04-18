@@ -21,7 +21,7 @@ private:
      * Each of the run* functions below use common logic for handling connected requests,
      * so you should split out that logic into its own function here.
     **/
-    void handle(TcpConnection* conn) const;
+    void handle(TcpConnection* conn); // const;
 public:
     /**
      * :: TODO ::
