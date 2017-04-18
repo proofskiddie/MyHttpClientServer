@@ -25,12 +25,13 @@ Request::Request(Config const& config, TcpConnection& conn) :
     m_path = std::string();
     m_method = std::string();
     m_version = std::string();
+    /*
     std::string request_line = parse_raw_line();
     yy_scan_string(request_line.c_str());
     yylex();
     yyparse();
     yy_delete_buffer(YY_CURRENT_BUFFER);
-    
+    */
     //parse_method(request_line);
     //parse_route(request_line);
     //parse_version(request_line);
