@@ -22,7 +22,6 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
-    static Server server;
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
