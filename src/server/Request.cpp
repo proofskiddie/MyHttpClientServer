@@ -18,7 +18,7 @@
 #include "../parse/lex.yy.c"
 #include "../parse/y.tab.c"
 
-Request(Config const& config, const TcpConnection *conn)
+Request(Config)// const& config, const TcpConnection *conn)
 {
     m_config = config;
     m_conn = conn;
