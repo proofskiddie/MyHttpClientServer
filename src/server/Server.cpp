@@ -144,7 +144,5 @@ Server::~Server() noexcept
     {
         d_error("Could not close master socket");
     }
-    if (server)
-    	delete server;
 }
 
