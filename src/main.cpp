@@ -10,7 +10,7 @@
 #include "error/SocketError.hpp"
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
-
+extern server;
 int main(int argc, char** argv)
 {
     // You will get SIGPIPEs when working with browsers
