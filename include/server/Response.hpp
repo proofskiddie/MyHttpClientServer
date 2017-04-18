@@ -29,7 +29,7 @@ public:
     /**
      * The Response constructor doesn't do much of anything on its own.
     **/
-    Response(Config const& config, const TcpConnection& conn);
+    Response(Config const& config, TcpConnection& conn);
 
     /**
      * :: TODO ::
