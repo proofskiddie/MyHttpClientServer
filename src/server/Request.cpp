@@ -10,7 +10,7 @@
 #include "server/Request.hpp"
 #include "http/HttpStatus.hpp"
 #include "server/TcpConnection.hpp"
-#include "Config.hpp"
+//#include "Config.hpp"
 #include "Utils.hpp"
 #include "error/RequestError.hpp"
 #include "error/ConnectionError.hpp"
