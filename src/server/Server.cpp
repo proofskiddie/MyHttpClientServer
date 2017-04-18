@@ -81,7 +81,7 @@ void Server::handle(TcpConnection* conn) const
     try
     {
         // creating req will parse the incoming request
-        Request req();
+        Request req;
 	req.set_conn(conn);
 	req.set_config(&m_config);
         // creating res as an empty response
