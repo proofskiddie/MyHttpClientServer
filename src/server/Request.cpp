@@ -18,7 +18,7 @@
 #include "../parse/lex.yy.c"
 #include "../parse/y.tab.c"
 
-Request::Request(const Config *config, const TcpConnection *conn)
+Request::Request(const Config *config, TcpConnection *conn)
 {
     m_config = config;
     m_conn = conn;
