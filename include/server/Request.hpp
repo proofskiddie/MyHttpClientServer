@@ -38,12 +38,11 @@ public:
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
     std::unordered_map<std::string, std::string> const& get_query() const noexcept;
     std::unordered_map<std::string, std::string> const& get_body() const noexcept;
-    
     static Request _currentRequest;
     std::string m_path;
     std::string m_method;
     std::string m_version;
-    
+private:
     Config const& m_config;
     TcpConnection& m_conn;
     std::unordered_map<std::string, std::string> m_headers;
