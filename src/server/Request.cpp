@@ -20,8 +20,8 @@
 
 Request::Request(Config &config, const TcpConnection *conn)
 {
-    m_config = config;
-    m_conn = conn;
+   // m_config = config;
+   // m_conn = conn;
     std::string request_line = parse_raw_line();
     /*
     yy_scan_string(request_line.c_str());

@@ -13,7 +13,7 @@
 
 class Server {
 private:
-    Config m_config;
+    Config const& m_config;
     int m_master;
     /*
      * :: TODO ::
