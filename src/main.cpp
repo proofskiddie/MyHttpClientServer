@@ -19,7 +19,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-	server = new Server(&config);
+	Server::server = new Server(&config);
         config.print();
 
         if (config.mode == Config::SM_LINEAR)
