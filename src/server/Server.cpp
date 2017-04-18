@@ -79,7 +79,7 @@ void Server::handle(TcpConnection* conn) //const
 {
     req = new Request(m_config, conn);
     Controller const* controller = nullptr;
-    perror("fuck");
+
     try
     {
         // creating res as an empty response
