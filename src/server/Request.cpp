@@ -25,8 +25,9 @@ Request::Request(Config const& config, TcpConnection& conn) :
     m_path = std::string();
     m_method = std::string();
     m_version = std::string();
-    /*
+    
     std::string request_line = parse_raw_line();
+    /*
     yy_scan_string(request_line.c_str());
     yylex();
     yyparse();
