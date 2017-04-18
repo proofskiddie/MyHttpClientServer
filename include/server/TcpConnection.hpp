@@ -37,7 +37,7 @@ public:
      * Gets a single byte from m_conn and stores it in *c.
      * If read() says there are no bytes left to be read, return false.
     **/
-    bool getc(unsigned char* c);
+    bool getc(unsigned char* c) const;
 
     /**
      * :: TODO ::
