@@ -13,7 +13,7 @@ public:
     /**
      * The Request constructor kicks off the parsing of the incoming request.
     **/
-    Request(Config *, TcpConnection *);
+    Request(Config const&, TcpConnection *);
 
     /**
      * Request::print() is a convenience method that prints the method, path, and version

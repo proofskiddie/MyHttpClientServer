@@ -21,6 +21,7 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
+    static Server *server;
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
@@ -44,6 +45,5 @@ public:
     void run_thread_pool(); // const;
     void run_thread_request(); // const;
 };
-static Server *server;
 
 #endif
