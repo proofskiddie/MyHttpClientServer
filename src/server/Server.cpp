@@ -75,7 +75,7 @@ void Server::run_thread_pool() const
 
 void Server::handle(TcpConnection* conn) const
 {
-
+    _currentRequest = Request(m_config, conn);
     Controller const* controller = nullptr;
 
     try

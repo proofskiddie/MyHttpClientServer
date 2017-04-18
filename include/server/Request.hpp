@@ -13,7 +13,7 @@ public:
     /**
      * The Request constructor kicks off the parsing of the incoming request.
     **/
-    Request();
+    Request(Config const& m_config, const TcpConnection *m_conn);
 
     /**
      * Request::print() is a convenience method that prints the method, path, and version
@@ -36,12 +36,6 @@ public:
     std::string const& get_method() const noexcept;
     std::string const& get_version() const noexcept;
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
-    void set_config (const Config& config) {
-	m_config = &config;
-    }
-    void set_conn (TcpConnection* conn) {
-	m_conn = conn;
-    }
     std::unordered_map<std::string, std::string> const& get_query() const noexcept;
     std::unordered_map<std::string, std::string> const& get_body() const noexcept;
     static Request _currentRequest;
@@ -49,7 +43,7 @@ public:
     std::string m_method;
     std::string m_version;
 private:
-    const Config *m_config;
+    Config const& m_config;
     const TcpConnection *m_conn;
     std::unordered_map<std::string, std::string> m_headers;
     std::unordered_map<std::string, std::string> m_query;

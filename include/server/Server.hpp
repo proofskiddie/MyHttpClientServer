@@ -9,13 +9,14 @@
 #include "server/TcpConnection.hpp"
 #include "controller/Controller.hpp"
 #include "http/HttpStatus.hpp"
+#include "server/Request.hpp"
 
 class Server {
 private:
     Config const& m_config;
     int m_master;
-
-    /**
+    Request _currentRequest; 
+    /*
      * :: TODO ::
      * Each of the run* functions below use common logic for handling connected requests,
      * so you should split out that logic into its own function here.
