@@ -10,8 +10,6 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server *server;
-
 int main(int argc, char** argv)
 {
     // You will get SIGPIPEs when working with browsers
@@ -21,25 +19,25 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        server = new Server(&config);
-
+        ser = new Server(&config);
+	Server::server = ser;
         config.print();
 
         if (config.mode == Config::SM_LINEAR)
         {
-            server->run_linear();
+           Server::server->run_linear();
         }
         else if (config.mode == Config::SM_REQUESTTHREAD)
         {
-            server->run_thread_request();
+            Server::server->run_thread_request();
         }
         else if (config.mode == Config::SM_FORK)
         {
-            server->run_fork();
+            Server::server->run_fork();
         }
         else if (config.mode == Config::SM_POOLTHREAD)
         {
-            server->run_thread_pool();
+            Server::server->run_thread_pool();
         }
         else
         {
