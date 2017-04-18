@@ -28,8 +28,8 @@ public:
      * The server constructor should acquire and set up the resources it needs,
      * such as a connection to the internet.
     **/
-    Server(Config const& config);
-
+    Server();
+    void set_config(Config const&);
     /**
      * :: TODO ::
      * The server destructor should release resources acquired in the constructor.

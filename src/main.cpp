@@ -10,7 +10,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server *fuckthislab;
+Request Server::_currentRequest;
 
 int main(int argc, char** argv)
 {
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        fuckthislab = new Server(config);
+        //Server server(config);
 
         config.print();
 

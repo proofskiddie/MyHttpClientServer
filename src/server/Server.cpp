@@ -26,9 +26,8 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server::Server(Config const& config) : m_config(config)
+Server::Server()
 {
-    throw TodoError("2", "Server constructor/connecting to a socket");
     
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) perror("error creating mastersocket");
@@ -43,6 +42,10 @@ Server::Server(Config const& config) : m_config(config)
     if (error == -1) perror("error binding address to mastersocket");
     error = listen(m_master, config.queue_length);
     
+}
+
+void Server::set_config(Config const& config) {
+	m_config = config;
 }
 
 void Server::run_linear() //const
