@@ -17,7 +17,7 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_shutdown(false)
 {
     if (accept(m_master, 0, 0) == -1)
-       d_errorf("this fucking shit");
+	perror("ah ... i dont know anymore");
 }
 
 TcpConnection::~TcpConnection() noexcept
