@@ -42,7 +42,7 @@ public:
     std::string m_method;
     std::string m_version;
 private:
-    Config const& m_config;
+    Config m_config;
     const TcpConnection *m_conn;
     std::unordered_map<std::string, std::string> m_headers;
     std::unordered_map<std::string, std::string> m_query;
