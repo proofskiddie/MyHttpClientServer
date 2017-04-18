@@ -40,10 +40,10 @@ public:
      * :: TODO ::
      * Each of the following are used for their respective server modes
     **/
-    void run_linear();// const;
-    void run_fork();// const;
-    void run_thread_pool();// const;
-    void run_thread_request();// const;
+    void run_linear() const;
+    void run_fork() const;
+    void run_thread_pool() const;
+    void run_thread_request() const;
 };
 
 #endif
