@@ -16,6 +16,8 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_master(master_fd),
     m_shutdown(false)
 {
+    char c;
+    getc(&c);
     accept(m_master, NULL, 0);
 }
 
