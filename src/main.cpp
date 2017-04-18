@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
     try 
     {
-        Config = new config(argc, argv);
+        Config config = new Config(argc, argv);
         server = new Server(config);
 
         config.print();
