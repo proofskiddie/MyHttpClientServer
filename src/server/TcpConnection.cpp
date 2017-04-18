@@ -35,7 +35,7 @@ void TcpConnection::shutdown()
     m_shutdown = true;
 }
 
-bool TcpConnection::getc(unsigned char* c)
+bool TcpConnection::getc(unsigned char* c) const
 {
 	if (read(m_master, c, 1) != 1)
 		return false;
