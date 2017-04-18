@@ -45,7 +45,7 @@ Server::Server(Config const& config) : m_config(config)
     
 }
 
-void Server::run_linear() const
+void Server::run_linear() //const
 {
     while (true)
     {
