@@ -10,7 +10,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Request Server::_currentRequest;
+Request Server::_server;
 
 int main(int argc, char** argv)
 {
@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        //Server server(config);
+        server.set_config(&config);
 
         config.print();
 
