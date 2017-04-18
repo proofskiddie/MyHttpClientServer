@@ -20,7 +20,7 @@ int main(int argc, char** argv)
 
     try 
     {
-        Config config(argc, argv);
+        Config = new config(argc, argv);
         server = new Server(config);
 
         config.print();
@@ -65,5 +65,6 @@ int main(int argc, char** argv)
         std::cerr << "Unknown error: " << e.what() << std::endl;
     }
     delete server;
+    delete config;
     return 1;
 }

@@ -13,7 +13,7 @@
 
 class Server {
 private:
-    Config const& m_config;
+    Config *m_config;
     int m_master; 
     /*
      * :: TODO ::
@@ -28,7 +28,7 @@ public:
      * such as a connection to the internet.
     **/
     Request *req;
-    Server(Config const& config);
+    Server(Config *config);
 
     /**
      * :: TODO ::
