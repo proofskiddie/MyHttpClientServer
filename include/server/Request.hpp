@@ -55,7 +55,7 @@ private:
      * When you encounter an unexpected format, you should send a response with the
      * "400 Bad Request" status code except for the specific cases noted below.
     **/
-    void set_config (Config const& config) {
+    void set_config (Config& config) {
 	m_config = config;
     }
     void set_conn (TcpConnection& conn) {
