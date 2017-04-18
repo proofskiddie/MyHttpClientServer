@@ -10,7 +10,7 @@
 #include "controller/Controller.hpp"
 #include "http/HttpStatus.hpp"
 #include "server/Request.hpp"
-
+Server *server;
 class Server {
 private:
     Config *m_config;
@@ -22,7 +22,6 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
-    static Server server;
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
