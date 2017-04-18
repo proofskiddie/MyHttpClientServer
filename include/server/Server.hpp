@@ -30,7 +30,7 @@ public:
      * such as a connection to the internet.
     **/
     Server();
-    void set_config(Config const&);
+    void set_config(Config *);
     /**
      * :: TODO ::
      * The server destructor should release resources acquired in the constructor.
