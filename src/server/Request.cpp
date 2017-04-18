@@ -17,6 +17,7 @@
 #include "error/TodoError.hpp"
 #include "../parse/y.tab.c"
 #include "../parse/lex.yy.c"
+
 Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
