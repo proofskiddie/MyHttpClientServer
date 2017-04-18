@@ -44,7 +44,7 @@ Server::Server()
     
 }
 
-void Server::set_config(Config const& config) {
+void Server::set_config(Config *config) {
 	m_config = config;
 }
 
