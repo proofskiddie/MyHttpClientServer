@@ -38,6 +38,7 @@ public:
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
     std::unordered_map<std::string, std::string> const& get_query() const noexcept;
     std::unordered_map<std::string, std::string> const& get_body() const noexcept;
+    
     static Request _currentRequest;
     std::string m_path;
     std::string m_method;
