@@ -13,7 +13,7 @@ public:
     /**
      * The Request constructor kicks off the parsing of the incoming request.
     **/
-    Request(Config const& config, TcpConnection& conn);
+    Request();
 
     /**
      * Request::print() is a convenience method that prints the method, path, and version
@@ -55,7 +55,12 @@ private:
      * When you encounter an unexpected format, you should send a response with the
      * "400 Bad Request" status code except for the specific cases noted below.
     **/
-
+    void set_config (const& config) {
+	m_config = config;
+    }
+    void set_conn (TcpConnection& conn) {
+	m_conn = conn;
+    }
     /**
      * :: TODO ::
      * parse_method() looks for "GET" at the start of the request_line (as well as "POST" 
