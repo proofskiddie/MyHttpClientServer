@@ -36,6 +36,12 @@ public:
     std::string const& get_method() const noexcept;
     std::string const& get_version() const noexcept;
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
+    void set_config (Config *config) {
+	m_config = config;
+    }
+    void set_conn (TcpConnection* conn) {
+	m_conn = conn;
+    }
     std::unordered_map<std::string, std::string> const& get_query() const noexcept;
     std::unordered_map<std::string, std::string> const& get_body() const noexcept;
     static Request _currentRequest;
@@ -55,12 +61,6 @@ private:
      * When you encounter an unexpected format, you should send a response with the
      * "400 Bad Request" status code except for the specific cases noted below.
     **/
-    void set_config (Config *config) {
-	m_config = config;
-    }
-    void set_conn (TcpConnection* conn) {
-	m_conn = conn;
-    }
     /**
      * :: TODO ::
      * parse_method() looks for "GET" at the start of the request_line (as well as "POST" 
