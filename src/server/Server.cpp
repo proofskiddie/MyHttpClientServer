@@ -86,7 +86,7 @@ void Server::handle(const TcpConnection* conn) //const
         // Printing the request will be helpful to tell what our server is seeing
         req->print();
 
-        std::string path = req.get_path();
+        std::string path = req->get_path();
 
         // This will route a request to the right controller
         // You only need to change this if you rename your controllers or add more routes
