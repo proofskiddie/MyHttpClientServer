@@ -87,9 +87,9 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
         Response res(*m_config, *conn);
 
         // Printing the request will be helpful to tell what our server is seeing
-        _currentRequest->print();
+        req->print();
 
-        std::string path = _currentRequest->get_path();
+        std::string path = req->get_path();
 
         // This will route a request to the right controller
         // You only need to change this if you rename your controllers or add more routes
@@ -139,7 +139,7 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
 
     // Dont forget about freeing memory!
     delete controller;
-    delete _currentRequest;
+    delete req;
 }
 
 Server::~Server() noexcept
