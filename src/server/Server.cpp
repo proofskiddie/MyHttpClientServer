@@ -73,7 +73,7 @@ void Server::run_thread_pool() //const
     throw TodoError("3", "You need to implement thread-pool mode");
 }
 
-void Server::handle(const TcpConnection* conn) //const
+void Server::handle(TcpConnection* conn) //const
 {
     req = new Request(m_config, conn);
     Controller const* controller = nullptr;
