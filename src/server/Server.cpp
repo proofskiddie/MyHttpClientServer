@@ -53,7 +53,7 @@ void Server::run_linear() //const
     while (true)
     {
         std::string response;
-        TcpConnection* conn = new TcpConnection(m_config, m_master);
+        TcpConnection* conn = new TcpConnection(*m_config, m_master);
 
         handle(conn);
 
@@ -78,13 +78,13 @@ void Server::run_thread_pool() //const
 
 void Server::handle(TcpConnection* conn) //const /*hope this dosent break the thing */
 {
-    _req = new Request(&m_config, conn);
+    req = new Request(*m_config, conn);
     Controller const* controller = nullptr;
 
     try
     {
         // creating res as an empty response
-        Response res(m_config, *conn);
+        Response res(*m_config, *conn);
 
         // Printing the request will be helpful to tell what our server is seeing
         _currentRequest->print();
@@ -95,15 +95,15 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
         // You only need to change this if you rename your controllers or add more routes
         if (path == "/hello-world")
         {
-            controller = new TextController(m_config, "Hello world!\n");
+            controller = new TextController(*m_config, "Hello world!\n");
         }
         else if (path.find("/script") == 0)
         {
-            controller = new ExecScriptController(m_config, "/script");
+            controller = new ExecScriptController(*m_config, "/script");
         }
         else
         {
-            controller = new SendFileController(m_config);
+            controller = new SendFileController(*m_config);
         }
 
         // Whatever controller we picked needs to be run with the given request and response
@@ -113,19 +113,19 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
     {
         d_warnf("Error parsing request: %s", e.what());
         
-        Controller::send_error_response(m_config, conn, e.status, "Error while parsing request\n");
+        Controller::send_error_response(*m_config, conn, e.status, "Error while parsing request\n");
     }
     catch (ControllerError const& e)
     {
         d_warnf("Error while handling request: %s", e.what());
 
-        Controller::send_error_response(m_config, conn, HttpStatus::InternalServerError, "Error while handling request\n");
+        Controller::send_error_response(*m_config, conn, HttpStatus::InternalServerError, "Error while handling request\n");
     }
     catch (ResponseError const& e)
     {
         d_warnf("Error while creating response: %s", e.what());
 
-        Controller::send_error_response(m_config, conn, HttpStatus::InternalServerError, "Error while handling response\n");
+        Controller::send_error_response(*m_config, conn, HttpStatus::InternalServerError, "Error while handling response\n");
     }
     catch (ConnectionError const& e)
     {
