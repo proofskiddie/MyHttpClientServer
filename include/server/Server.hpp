@@ -22,7 +22,7 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
-    Request *_currentRequest; 
+    static Request *_currentRequest; 
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
