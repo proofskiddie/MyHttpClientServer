@@ -49,7 +49,7 @@ void Server::run_linear() //const
     while (true)
     {
         std::string response;
-        TcpConnection* conn = new TcpConnection(m_config, m_master);
+        TcpConnection* conn = new TcpConnection(*m_config, m_master);
 
         handle(conn);
 
