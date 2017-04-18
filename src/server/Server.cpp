@@ -40,7 +40,7 @@ Server::Server(Config *config) : m_config(config)
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
     if (error == -1) perror("error binding address to mastersocket");
-    error = listen(m_master, config.queue_length);
+    error = listen(m_master, config->queue_length);
     
 }
 
