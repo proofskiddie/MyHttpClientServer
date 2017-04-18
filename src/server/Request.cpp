@@ -18,6 +18,11 @@
 #include "../parse/lex.yy.c"
 #include "../parse/y.tab.c"
 
+
+void Request::parse_method(std::string& raw_line)
+{
+    throw TodoError("2", "You have to implement parsing methods");
+}
 Request(Config const& config, const TcpConnection *conn)
 {
     m_config = config;
@@ -41,11 +46,6 @@ Request(Config const& config, const TcpConnection *conn)
 
     //parse_headers();
     //parse_body();
-}
-
-void Request::parse_method(std::string& raw_line)
-{
-    throw TodoError("2", "You have to implement parsing methods");
 }
 
 void Request::parse_route(std::string& raw_line)
