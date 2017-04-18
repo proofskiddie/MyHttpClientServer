@@ -79,12 +79,12 @@ void Server::handle(TcpConnection* conn) //const
 {
     req = new Request(m_config, conn);
     Controller const* controller = nullptr;
-
+    perror("fuck");
     try
     {
         // creating res as an empty response
         Response res(*m_config, *conn);
-
+	
         // Printing the request will be helpful to tell what our server is seeing
         req->print();
 
