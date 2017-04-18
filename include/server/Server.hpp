@@ -10,7 +10,6 @@
 #include "controller/Controller.hpp"
 #include "http/HttpStatus.hpp"
 #include "server/Request.hpp"
-Server *server;
 class Server {
 private:
     Config *m_config;
@@ -46,4 +45,5 @@ public:
     void run_thread_request(); // const;
 };
 
+Server *server;
 #endif
