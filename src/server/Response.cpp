@@ -26,7 +26,8 @@ void Response::send(void const* buf, size_t bufsize, bool raw)
 
 void Response::send_headers()
 {
-    
+   for (auto const& element : m_headers) 
+	conn.puts( element.first() + ":" element.second() + "\r\n");
 }
 
 void Response::set_header(std::string const& key, std::string const& value)
