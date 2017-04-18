@@ -9,7 +9,7 @@
 #include "error/TodoError.hpp"
 #include "Config.hpp"
 
-Response::Response(Config const& config, TcpConnection& conn) :
+Response::Response(Config const& config, const TcpConnection& conn) :
     m_config(config),
     m_conn(conn),
     m_headers_sent(false)
