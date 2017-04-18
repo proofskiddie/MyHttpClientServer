@@ -13,7 +13,7 @@ public:
     /**
      * The Request constructor kicks off the parsing of the incoming request.
     **/
-    Request(const Config, TcpConnection *);
+    Request(const Config*,const TcpConnection *);
 
     /**
      * Request::print() is a convenience method that prints the method, path, and version
@@ -42,7 +42,7 @@ public:
     std::string m_method;
     std::string m_version;
 private:
-    Config *m_config;
+    const Config *m_config;
     const TcpConnection *m_conn;
     std::unordered_map<std::string, std::string> m_headers;
     std::unordered_map<std::string, std::string> m_query;
