@@ -36,7 +36,7 @@ public:
     std::string const& get_method() const noexcept;
     std::string const& get_version() const noexcept;
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
-    void set_config (Config *config) {
+    void set_config (Config& config) {
 	m_config = config;
     }
     void set_conn (TcpConnection* conn) {
