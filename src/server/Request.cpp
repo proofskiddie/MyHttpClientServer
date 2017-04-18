@@ -20,7 +20,7 @@
 
 Request::Request(Config const& config, TcpConnection& conn) :
     m_config(config),
-    m_conn(conn),
+    m_conn(conn)
 {
     m_path = std::string();
     m_method = std::string();
