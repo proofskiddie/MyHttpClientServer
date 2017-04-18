@@ -81,7 +81,7 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
     try
     {
         // creating res as an empty response
-        Response res(&m_config, conn);
+        Response res(m_config, *conn);
 
         // Printing the request will be helpful to tell what our server is seeing
         _currentRequest->print();
