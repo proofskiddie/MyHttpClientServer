@@ -21,18 +21,20 @@ Response::Response(Config const& config, TcpConnection& conn) :
 
 void Response::send(void const* buf, size_t bufsize, bool raw)
 {
-    throw TodoError("2", "You need to implement sending responses");
+    if(!raw)
+    	send_headers();
+    m_conn.putbuf(buf, bufsize);   	
 }
 
 void Response::send_headers()
 {
-   for (auto const& element : m_headers) 
+    for (auto const& element : m_headers) 
 	m_conn.puts( element.first + ":" + element.second + "\r\n");
 }
 
 void Response::set_header(std::string const& key, std::string const& value)
 {
-	m_headers[key] = value;
+    m_headers[key] = value;
 }
 
 void Response::set_status(HttpStatus const& status)
