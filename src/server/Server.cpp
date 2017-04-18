@@ -41,7 +41,7 @@ void Server::init()
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
     if (error == -1) perror("error binding address to mastersocket");
-    error = listen(m_master, config->queue_length);
+    error = listen(m_master, m_config->queue_length);
     
 }
 void Server::set_config(Config *config) {
