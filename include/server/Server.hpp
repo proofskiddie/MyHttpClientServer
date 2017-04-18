@@ -46,5 +46,4 @@ public:
     void run_thread_pool(); // const;
     void run_thread_request(); // const;
 };
-Server *server;
 #endif
