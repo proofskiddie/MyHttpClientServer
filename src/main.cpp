@@ -10,7 +10,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server Server::_server;
+Server Server::server;
 
 int main(int argc, char** argv)
 {
