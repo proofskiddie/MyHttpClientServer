@@ -107,7 +107,7 @@ void Server::handle(TcpConnection* conn) //const /*hope this dosent break the th
         }
 
         // Whatever controller we picked needs to be run with the given request and response
-        controller->run(*_currentRequest, res);
+        controller->run(*req, res);
     }
     catch (RequestError const& e)
     {
