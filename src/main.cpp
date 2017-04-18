@@ -21,7 +21,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        server.set_config(&config);
+        Server::server.set_config(&config);
 
         config.print();
 
