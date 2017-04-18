@@ -27,19 +27,19 @@ int main(int argc, char** argv)
 
         if (config.mode == Config::SM_LINEAR)
         {
-            Server::server.run_linear();
+            server->run_linear();
         }
         else if (config.mode == Config::SM_REQUESTTHREAD)
         {
-            Server::server.run_thread_request();
+            server->run_thread_request();
         }
         else if (config.mode == Config::SM_FORK)
         {
-            Server::server.run_fork();
+            server->run_fork();
         }
         else if (config.mode == Config::SM_POOLTHREAD)
         {
-            Server::server.run_thread_pool();
+            server->server.run_thread_pool();
         }
         else
         {
