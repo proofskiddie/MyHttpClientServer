@@ -18,9 +18,7 @@
 #include "../parse/lex.yy.c"
 #include "../parse/y.tab.c"
 
-Request::Request() :
-    m_config(config),
-    m_conn(conn)
+Request::Request()
 {
     m_path = std::string();
     m_method = std::string();

@@ -43,7 +43,7 @@ public:
     std::string m_method;
     std::string m_version;
 private:
-    Config& m_config;
+    Config *m_config;
     TcpConnection& m_conn;
     std::unordered_map<std::string, std::string> m_headers;
     std::unordered_map<std::string, std::string> m_query;
@@ -55,7 +55,7 @@ private:
      * When you encounter an unexpected format, you should send a response with the
      * "400 Bad Request" status code except for the specific cases noted below.
     **/
-    void set_config (Config& config) {
+    void set_config (Config *config) {
 	m_config = config;
     }
     void set_conn (TcpConnection& conn) {
