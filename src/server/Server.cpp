@@ -34,8 +34,9 @@ void Server::init()
     if (m_master == -1) perror("error creating mastersocket");
     
     int optval = 1;
-    setsockopt(m_master, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int));
-    
+    if (setsockopt(m_master, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1)
+    	perror("setsockopt error");
+     
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     

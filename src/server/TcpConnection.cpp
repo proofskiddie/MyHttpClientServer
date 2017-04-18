@@ -16,7 +16,7 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_master(master_fd),
     m_shutdown(false)
 {
-    std::cout << accept(m_master, NULL, 0) << std::endl;
+    accept(m_master, NULL, 0);
 }
 
 TcpConnection::~TcpConnection() noexcept
