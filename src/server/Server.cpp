@@ -75,7 +75,7 @@ void Server::run_thread_pool() const
 
 void Server::handle(TcpConnection* conn) const
 {
-    _currentRequest = Request(m_config, conn);
+    _currentRequest = new Request(m_config, conn);
     Controller const* controller = nullptr;
 
     try
@@ -136,6 +136,7 @@ void Server::handle(TcpConnection* conn) const
 
     // Dont forget about freeing memory!
     delete controller;
+    delete _currentRequest;
 }
 
 Server::~Server() noexcept
