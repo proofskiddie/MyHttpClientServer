@@ -84,7 +84,7 @@ void Server::handle(const TcpConnection* conn) //const
         Response res(m_config, *conn);
 
         // Printing the request will be helpful to tell what our server is seeing
-        req.print();
+        req->print();
 
         std::string path = req.get_path();
 
@@ -104,7 +104,7 @@ void Server::handle(const TcpConnection* conn) //const
         }
 
         // Whatever controller we picked needs to be run with the given request and response
-        controller->run(req, res);
+        controller->run(*req, res);
     }
     catch (RequestError const& e)
     {
