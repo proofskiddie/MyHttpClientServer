@@ -19,8 +19,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        ser = new Server(&config);
-	Server::server = ser;
+	Server::server = new Server(&config);
         config.print();
 
         if (config.mode == Config::SM_LINEAR)
@@ -62,6 +61,5 @@ int main(int argc, char** argv)
     {
         std::cerr << "Unknown error: " << e.what() << std::endl;
     }
-    delete server;
     return 1;
 }
