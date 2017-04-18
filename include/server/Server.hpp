@@ -21,14 +21,16 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
+    void init();
+    void set_config(Config *);
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
      * such as a connection to the internet.
     **/
     Request *req;
-    Server(Config *config);
-
+    Server();
+    static Server server;
     /**
      * :: TODO ::
      * The server destructor should release resources acquired in the constructor.

@@ -26,9 +26,10 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server::Server(Config *config) : m_config(config)
+Server::Server() {}
+
+void Server::init()
 {
-    
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) perror("error creating mastersocket");
     
@@ -43,7 +44,9 @@ Server::Server(Config *config) : m_config(config)
     error = listen(m_master, config->queue_length);
     
 }
-
+void Server::set_config(Config *config) {
+	m_config = config;
+}
 void Server::run_linear() //const
 {
     while (true)

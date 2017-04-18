@@ -10,7 +10,9 @@
 #include "error/SocketError.hpp"
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
-extern Server *server;
+
+Server Server::server;
+
 int main(int argc, char** argv)
 {
     // You will get SIGPIPEs when working with browsers
@@ -20,8 +22,9 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-	server = new Server(&config);
-        config.print();
+        server.set_config(&config);
+	server.init();
+	config.print();
 
         if (config.mode == Config::SM_LINEAR)
         {
