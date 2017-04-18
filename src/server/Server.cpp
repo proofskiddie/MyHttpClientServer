@@ -45,7 +45,7 @@ Server::Server(Config const& config) : m_config(config)
     
 }
 
-void Server::run_linear() const
+void Server::run_linear() //const
 {
     while (true)
     {
@@ -58,17 +58,17 @@ void Server::run_linear() const
     }
 }
 
-void Server::run_thread_request() const
+void Server::run_thread_request() //const
 {
     throw TodoError("3", "You need to implement thread-per-request mode");
 }
 
-void Server::run_fork() const
+void Server::run_fork() //const
 {
     throw TodoError("3", "You need to implement process-per-request mode");
 }
 
-void Server::run_thread_pool() const
+void Server::run_thread_pool() //const
 {
     throw TodoError("3", "You need to implement thread-pool mode");
 }
