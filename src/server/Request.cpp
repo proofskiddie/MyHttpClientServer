@@ -16,7 +16,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Request::Request(const Config *config, const TcpConnection *conn)
+Request::Request(Config const& config, const TcpConnection *conn)
 {
     m_config = config;
     m_conn = conn;
