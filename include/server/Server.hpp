@@ -20,7 +20,7 @@ private:
      * Each of the run* functions below use common logic for handling connected requests,
      * so you should split out that logic into its own function here.
     **/
-    void handle(const TcpConnection* conn) const;
+    void handle(const TcpConnection* conn) // const;
 public:
     /**
      * :: TODO ::
@@ -40,10 +40,10 @@ public:
      * :: TODO ::
      * Each of the following are used for their respective server modes
     **/
-    void run_linear() const;
-    void run_fork() const;
-    void run_thread_pool() const;
-    void run_thread_request() const;
+    void run_linear(); //const;
+    void run_fork(); // const;
+    void run_thread_pool(); // const;
+    void run_thread_request(); // const;
 };
 
 #endif
