@@ -15,7 +15,7 @@
 #include "error/RequestError.hpp"
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
-#include "y.tab.h"
+#include "../parse/y.tab.h"
 Request::Request(Config *config, TcpConnection *conn)
 {
     m_config = config;
