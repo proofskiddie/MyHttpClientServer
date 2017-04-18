@@ -10,6 +10,8 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
+Server *fuckthislab;
+
 int main(int argc, char** argv)
 {
     // You will get SIGPIPEs when working with browsers
@@ -19,7 +21,7 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        Server server(config);
+        fuckthislab = new Server(config);
 
         config.print();
 
