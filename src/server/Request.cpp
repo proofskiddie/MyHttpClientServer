@@ -21,9 +21,7 @@ Request::Request(const Config *config, const TcpConnection *conn)
     m_config = config;
     m_conn = conn;
     
-    /*
     std::string request_line = parse_raw_line();
-    */
     //parse_method(request_line);
     //parse_route(request_line);
     //parse_version(request_line);
