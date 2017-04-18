@@ -16,9 +16,8 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_master(master_fd),
     m_shutdown(false)
 {
-    unsigned char c;
-    getc(&c);
-    accept(m_master, NULL, 0);
+    if (accept(m_master, 0, 0) == -1)
+       d_errorf("this fucking shit");
 }
 
 TcpConnection::~TcpConnection() noexcept
