@@ -39,7 +39,7 @@ int main(int argc, char** argv)
         }
         else if (config.mode == Config::SM_POOLTHREAD)
         {
-            server->server.run_thread_pool();
+            server->run_thread_pool();
         }
         else
         {
