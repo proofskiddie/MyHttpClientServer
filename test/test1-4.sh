@@ -21,7 +21,7 @@ server_pid=$!
 
 sleep 0.2
 
-if ps | grep "[h]ttp" > /dev/null; then
+if ps | grep "[h]ttp" > /dev/null 2>&1; then
     kill $server_pid
     wait $server_pid 2> /dev/null
     echo "Server does not exit on invalid option" > $cmpfile

@@ -27,7 +27,7 @@ port=$($root/get-port.sh $server_pid)
 
 printf "Server pid $server_pid running on port $port..."
 
-testall.sh -h 127.0.0.1:$port 2 4 > $testout 2>&1
+$root/testall.sh -h 127.0.0.1:$port 2 4 > $testout 2>&1
 
 sleep 0.5
 

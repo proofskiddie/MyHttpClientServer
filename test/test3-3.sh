@@ -14,7 +14,7 @@ fi
 
 verbose="$1"
 
-$http -P 4 -q 6 > $serverout 2>&1 &
+$http -P 8 -q 6 > $serverout 2>&1 &
 server_pid=$!
 
 sleep 0.2
@@ -44,8 +44,8 @@ proccount=$(ps -Lfu $USER | grep $http | grep -vE 'bash|grep' | awk '{print $2}'
 threadcount=$(ps -Lfu $USER | grep $http | grep -vE 'bash|grep' | awk '{print $4}' | uniq | wc -l)
 ret=0
 
-if [[ $proccount != "1" ]] || [[ $threadcount != "4" && $threadcount != "5" ]]; then
-    echo "Expected 1 process and 4 (or 5) threads after 3 requests; got $proccount processes and $threadcount threads" > $cmpfile
+if [[ $proccount != "1" ]] || [[ $threadcount != "8" && $threadcount != "9" ]]; then
+    echo "Expected 1 process and 8 (or 9) threads after 3 requests; got $proccount processes and $threadcount threads" > $cmpfile
     ret=1
 fi
 
@@ -64,8 +64,8 @@ sleep 0.5
 proccount=$(ps -Lfu $USER | grep $http | grep -vE 'bash|grep' | awk '{print $2}' | uniq | wc -l)
 threadcount=$(ps -Lfu $USER | grep $http | grep -vE 'bash|grep' | awk '{print $4}' | uniq | wc -l)
 
-if [[ $proccount != "1" ]] || [[ $threadcount != "4" && $threadcount != "5" ]]; then
-    echo "Expected 1 process and 4 (or 5) threads after 6 requests; got $proccount processes and $threadcount threads" > $cmpfile
+if [[ $proccount != "1" ]] || [[ $threadcount != "8" && $threadcount != "9" ]]; then
+    echo "Expected 1 process and 8 (or 9) threads after 6 requests; got $proccount processes and $threadcount threads" > $cmpfile
     ret=1
 fi
 

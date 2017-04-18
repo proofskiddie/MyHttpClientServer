@@ -26,12 +26,12 @@ void Response::send(void const* buf, size_t bufsize, bool raw)
 
 void Response::send_headers()
 {
-    throw TodoError("2", "You need to implement sending headers");
+    
 }
 
 void Response::set_header(std::string const& key, std::string const& value)
 {
-    throw TodoError("2", "You need to implement controllers setting headers");
+	m_headers[key] = value;
 }
 
 void Response::set_status(HttpStatus const& status)

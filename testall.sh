@@ -3,6 +3,9 @@
 # fail if any commands here fail
 set -e
 
+# we want to run all tests from the root of the repo
+cd $(git rev-parse --show-toplevel)
+
 make server -j4
 
 ansi_red="\x1b[31m"

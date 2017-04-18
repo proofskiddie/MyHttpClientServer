@@ -58,7 +58,7 @@ done
 
 if [[ "$verbose" != "-v" ]]; then
     rm -f $serverout
-    if [[ "$success" = "0" ]]; then
+    if [[ "$ret" = "0" ]]; then
         rm -f $cmpfile
     fi
 fi
