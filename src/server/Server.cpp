@@ -26,24 +26,24 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server::Server() {printf("bah");}
+Server::Server() {}
 
 void Server::init()
 {
     m_master = socket(AF_INET, SOCK_STREAM, 0);
-    if (m_master == -1) perror("error creating mastersocket");
+    if (m_master == -1) SocketError("socket") ;
     
     int optval = 1;
     if (setsockopt(m_master, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1)
-    	perror("setsockopt error");
+    	SocketError("setsockopt");
      
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
-    if (error == -1) perror("error binding address to mastersocket");
+    if (error == -1) SocketError("bind");
     error = listen(m_master, m_config->queue_length);
-    if (error == -1) perror("error ..uh");
+    if (error == -1) SocketError("listen");
 }
 void Server::set_config(Config *config) {
 	m_config = config;
