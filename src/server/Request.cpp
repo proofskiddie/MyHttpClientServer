@@ -22,14 +22,10 @@ Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
     m_conn = conn;
-    m_path = std::string();
-    m_version = std::string();
-    m_method = std::string();
     std::string request_line;
+    std::vector<std::string&> vec;
+    vec.push_back(m_path);
     while (request_line = parse_raw_line(), request_line.compare("\r\n")) {
-    	yy_scan_string(request_line.c_str());
-	if (yyparse() == 1) break;
-	yy_delete_buffer(YY_CURRENT_BUFFER);
     }
     if (!request_line.empty())
     {
