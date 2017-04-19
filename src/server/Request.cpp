@@ -21,8 +21,9 @@ Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
     m_conn = conn;
-    std::string request_line;
+    std::string request_line = parse_raw_line();
     parse_method(request_line);
+    /*
     parse_route(request_line);
     parse_version(request_line);
     parse_headers();
@@ -32,6 +33,7 @@ Request::Request(Config *config, TcpConnection *conn)
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
+    */
 }
 
 void Request::parse_method(std::string& raw_line)
