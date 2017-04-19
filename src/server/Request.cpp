@@ -25,27 +25,14 @@ Request::Request(Config *config, TcpConnection *conn)
     std::string request_line;
     int lim = 10;
     while (request_line = parse_raw_line(), --lim && request_line.compare("\r\n")) {
-	yy_scan_string("GET /hello-world /HTTP/1.0\r\n");
-	yyparse();
-	/*
-	yy_scan_string(request_line.c_str());
-    	yylex();
-    	yyparse();
-    	yy_delete_buffer(YY_CURRENT_BUFFER);
-    	*/
+    	yy_scan_string(request_line.c_str());
+	yylex();
+	yy_delete_buffer(YY_CURRENT_BUFFER);
     }
-    yylex_destroy();
-    //parse_method(request_line);
-    //parse_route(request_line);
-    //parse_version(request_line);
-    // the previous three parse_* calls should consume the entire line
     if (!request_line.empty())
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
-
-    //parse_headers();
-    //parse_body();
 }
 
 void Request::parse_method(std::string& raw_line)
