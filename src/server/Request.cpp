@@ -38,7 +38,7 @@ void Request::parse_method(std::string& raw_line)
 	if (raw_line.substr(3).compare("GET")) {
 		m_method = "GET";
 		raw_line = raw_line.substr(3, raw_line.size());
-	} else if (raw_line.substr(4).compare("POST") {
+	} else if (raw_line.substr(4).compare("POST")) {
 		m_method = "POST";
 		raw_line = raw_line.substr(4, raw_line.size());
 	} else
