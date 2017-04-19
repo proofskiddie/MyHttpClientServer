@@ -38,9 +38,11 @@ void TcpConnection::shutdown()
 
 bool TcpConnection::getc(unsigned char* c) const
 {	
-	int ret;
-	while (ret = read(m_master, c, 1), ret != 1);
-	return (ret == -1)? false : true;
+	int ret, mode = 0;
+	ioctl(m_master, FIONBIO, &mode);
+	if (ret = read(m_master, c, 1), ret <= 0)
+		return false;
+	return true;
 }
 
 void TcpConnection::putc(unsigned char c)
