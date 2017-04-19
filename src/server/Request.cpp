@@ -28,8 +28,6 @@ Request::Request(Config *config, TcpConnection *conn)
     parse_headers();
     parse_body();
 
-    while (request_line = parse_raw_line(), parse_http_request(request_line)) {
-    }
     if (!request_line.empty())
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
