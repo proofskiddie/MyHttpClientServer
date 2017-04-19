@@ -41,7 +41,7 @@ bool TcpConnection::getc(unsigned char* c) const
 {	
 	int ret, mode = 0;
 	ioctl(m_master, FIONBIO, &mode);
-	if (ret = read(m_master, c, 1), ret <= 0)
+	if (ret = read(m_master, c, 1), ret < 0)
 		return false;
 	return true;
 }
