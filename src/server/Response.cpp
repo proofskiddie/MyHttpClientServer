@@ -23,6 +23,7 @@ void Response::send(void const* buf, size_t bufsize, bool raw)
 {
     if(!raw)
     	send_headers();
+    m_conn.puts(m_status_text);
     m_conn.putbuf(buf, bufsize);   	
     m_conn.shutdown();
 }
@@ -30,7 +31,7 @@ void Response::send(void const* buf, size_t bufsize, bool raw)
 void Response::send_headers()
 {
     for (auto const& element : m_headers) 
-	m_conn.puts( element.first + ":" + element.second + "\r\n");
+	m_conn.puts( element.first + ": " + element.second + "\r\n");
 }
 
 void Response::set_header(std::string const& key, std::string const& value)
