@@ -10,6 +10,7 @@
 #include "controller/Controller.hpp"
 #include "http/HttpStatus.hpp"
 #include "server/Request.hpp"
+
 class Server {
 private:
     Config *m_config;
@@ -21,15 +22,13 @@ private:
     **/
     void handle(TcpConnection* conn); // const;
 public:
-    void init();
-    void set_config(Config *);
     /**
      * :: TODO ::
      * The server constructor should acquire and set up the resources it needs,
      * such as a connection to the internet.
     **/
     Request *req;
-    Server();
+    Server(Config *, TcpConnection *);
     static Server server;
     /**
      * :: TODO ::

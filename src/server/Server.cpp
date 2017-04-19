@@ -26,10 +26,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server::Server() {}
-
-void Server::init()
-{
+Server::Server(Config *config) : m_config(config){
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) throw SocketError("socket") ;
     
@@ -47,9 +44,7 @@ void Server::init()
     error = listen(m_master, m_config->queue_length);
     if (error == -1) throw SocketError("listen");
 }
-void Server::set_config(Config *config) {
-	m_config = config;
-}
+
 void Server::run_linear() //const
 {
     while (true)
