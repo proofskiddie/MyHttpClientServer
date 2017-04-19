@@ -39,6 +39,7 @@ Request::Request(Config *config, TcpConnection *conn)
 void Request::parse_method(std::string& raw_line)
 {
 	if (raw_line.substr(3).compare("GET")) {
+		printf("blah\n");
 		m_method = "GET";
 		raw_line = raw_line.substr(3);
 	} else if (raw_line.substr(4).compare("POST")) {
