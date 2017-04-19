@@ -16,7 +16,7 @@ private:
     TcpConnection& m_conn;
     bool m_headers_sent;
     std::string m_status_text;
-
+    ~Response {}
     /**
      * We want to use a std::map here instead of a std::unordered_map,
      * which is what most of the rest of the skeleton code suggests using
