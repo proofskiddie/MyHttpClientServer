@@ -29,7 +29,6 @@ public:
      * The Response constructor doesn't do much of anything on its own.
     **/
     Response(Config const& config, TcpConnection& conn);
-    ~Response {}
 
     /**
      * :: TODO ::
