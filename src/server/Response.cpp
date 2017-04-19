@@ -24,6 +24,7 @@ void Response::send(void const* buf, size_t bufsize, bool raw)
     m_conn.puts(m_status_text + "\r\n");
     if(!raw)
     	send_headers();
+    m_conn.puts("\r\n");
     m_conn.putbuf(buf, bufsize);   	
     m_conn.shutdown();
 }
