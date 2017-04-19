@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <cstring>
 #include <sys/socket.h>
-#include <sys/ioctl.h>
 
 #include "Utils.hpp"
 #include "Config.hpp"
@@ -39,9 +38,8 @@ void TcpConnection::shutdown()
 
 bool TcpConnection::getc(unsigned char* c) const
 {	
-	int ret, mode = 0;
-	ioctl(m_master, FIONBIO, &mode);
-	if (ret = read(m_master, c, 1), ret < 0)
+	int ret;
+	if (ret = recv(m_master, c, 1, MSG_WAITALL, NULL, 0), ret <= 0)
 		return false;
 	return true;
 }
