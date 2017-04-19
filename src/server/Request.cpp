@@ -21,11 +21,13 @@ Request::Request(Config *config, TcpConnection *conn)
     m_config = config;
     m_conn = conn;
     std::string request_line = parse_raw_line();
-    parse_method(request_line);
-    parse_route(request_line);
-    parse_version(request_line);
-    parse_headers();
-    parse_body();
+    if (request_line.size() != 0) {
+	    parse_method(request_line);
+	    parse_route(request_line);
+	    parse_version(request_line);
+	    parse_headers();
+	    parse_body();
+    }
     /*
     if (!request_line.empty())
     {
