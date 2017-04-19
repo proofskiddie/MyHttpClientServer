@@ -76,13 +76,13 @@ void Request::parse_version(std::string& raw_line)
 	raw_line = raw_line.substr(i, raw_line.size());
 	
 	if (raw_line.substr(8).compare("HTTP/1.0")) {
-		m_method = "HTTP/1.0";
+		m_version = "HTTP/1.0";
 		raw_line = raw_line.substr(8, raw_line.size());
 	} else if (raw_line.substr(8).compare("HTTP/1.1")) {
-		m_method = "HTTP/1.1";
+		m_version = "HTTP/1.1";
 		raw_line = raw_line.substr(8, raw_line.size());
 	} else
-		throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
+		throw RequestError(HttpStatus::BadRequest, "505 HTTP Version Not Supported\n");
 }
 
 void Request::parse_headers()
