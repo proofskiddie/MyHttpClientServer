@@ -22,6 +22,7 @@ Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
     m_conn = conn;
+    m_method ="GET";
     m_path = "/hello-world";       
     /*
     std::string request_line = parse_raw_line();

@@ -26,7 +26,7 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server::Server() {}
+Server::Server() {printf("bah");}
 
 void Server::init()
 {
