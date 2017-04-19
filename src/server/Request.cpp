@@ -22,6 +22,12 @@ Request::Request(Config *config, TcpConnection *conn)
     m_config = config;
     m_conn = conn;
     std::string request_line;
+    parse_method(request_line);
+    parse_route(request_line);
+    parse_version(request_line);
+    parse_headers();
+    parse_body();
+
     while (request_line = parse_raw_line(), parse_http_request(request_line)) {
     }
     if (!request_line.empty())
@@ -32,7 +38,7 @@ Request::Request(Config *config, TcpConnection *conn)
 
 void Request::parse_method(std::string& raw_line)
 {
-    throw TodoError("2", "You have to implement parsing methods");
+	
 }
 
 void Request::parse_route(std::string& raw_line)
