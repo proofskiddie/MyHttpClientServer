@@ -17,7 +17,7 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_shutdown(false)
 {
     if (m_conn = accept(m_master, 0, 0), m_conn == -1)
-	perror("ah ... i dont know anymore");
+	throw SocketError("accept");
 }
 
 TcpConnection::~TcpConnection() noexcept
@@ -39,25 +39,25 @@ void TcpConnection::shutdown()
 bool TcpConnection::getc(unsigned char* c) const
 {	
 	int ret;
-	if (ret = recv(m_master, c, 1, MSG_WAITALL), ret <= 0)
-		return false;
-	return true;
+	if (ret = recv(m_master, c, 1, MSG_WAITALL), ret < 0)
+		throw SocketError("getc");
+	return (ret == 0)? false : true;
 }
 
 void TcpConnection::putc(unsigned char c)
 {
 	if (write(m_master, &c, 1) == -1)
-		perror("error");
+		throw SocketError("putc");
 }
 
 void TcpConnection::puts(std::string const& str)
 {
 	if (write(m_master, str.c_str(), str.size()) == -1)
-		perror("error");
+		throw SocketError("puts");		
 }
 
 void TcpConnection::putbuf(void const* buf, size_t bufsize)
 {
 	if (write(m_master, buf, bufsize) == -1)
-		perror("error");
+		throw SocketError("putbuf");
 }
