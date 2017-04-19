@@ -38,8 +38,8 @@ Request::Request(Config *config, TcpConnection *conn)
 
 void Request::parse_method(std::string& raw_line)
 {
-	raw_line = parse_http_request(raw_line, "METHOD");
-	if (!raw_line.compare("err")) throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
+	std::vector<std::string> vec = parse_http_request(raw_line);
+	if (parse_error) throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
 }
 
 void Request::parse_route(std::string& raw_line)
