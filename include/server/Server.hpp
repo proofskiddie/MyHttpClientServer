@@ -28,7 +28,7 @@ public:
      * such as a connection to the internet.
     **/
     Request *req;
-    Server(Config *, TcpConnection *);
+    Server(Config *);
     static Server server;
     /**
      * :: TODO ::
