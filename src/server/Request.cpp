@@ -23,12 +23,9 @@ Request::Request(Config *config, TcpConnection *conn)
     m_config = config;
     m_conn = conn;
     std::string request_line;
-    yyscan_t scanner;
-    YY_BUFFER_STATE buf;
-    yylex_init(&scanner);
     while (request_line = parse_raw_line(), request_line.compare("\r\n")) {
-	buf = yy_scan_string(request_line.c_str(), scanner);
-	yylex(scanner);
+	yy_scan_string(request_line.c_str());
+	yyparse();
 	/*
 	yy_scan_string(request_line.c_str());
     	yylex();
@@ -36,8 +33,7 @@ Request::Request(Config *config, TcpConnection *conn)
     	yy_delete_buffer(YY_CURRENT_BUFFER);
     	*/
     }
-    yy_delete_buffer(buf, scanner);
-    yylex_destroy(scanner);
+    yylex_destroy();
     //parse_method(request_line);
     //parse_route(request_line);
     //parse_version(request_line);
