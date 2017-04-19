@@ -30,6 +30,7 @@ Server::Server() {}
 
 void Server::init()
 {
+    SocketError("hailmary");
     m_master = socket(AF_INET, SOCK_STREAM, 0);
     if (m_master == -1) SocketError("socket") ;
     
