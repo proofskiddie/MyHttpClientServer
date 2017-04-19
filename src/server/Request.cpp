@@ -16,7 +16,6 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 #include "../parse/y.tab.c"
-#include "../parse/lex.yy.c"
 
 Request::Request(Config *config, TcpConnection *conn)
 { 
@@ -24,9 +23,6 @@ Request::Request(Config *config, TcpConnection *conn)
     m_conn = conn;
     std::string request_line;
     while (request_line = parse_raw_line(), parse_http_request(request_line)) {
-    	yy_scan_string(request_line.c_str());
-	if (yyparse() == 1) break;
-	yy_delete_buffer(YY_CURRENT_BUFFER);
     }
     if (!request_line.empty())
     {
