@@ -54,7 +54,7 @@ void Request::parse_route(std::string& raw_line)
 	bool err = false;
 	if (raw_line[0] != '/') err = true;
 	else 
-		for (i = 0; raw_line[i] != ' ' && raw_line != '\t'; ++i)
+		for (i = 0; raw_line[i] != ' ' && raw_line[i] != '\t'; ++i)
 			if (raw_line[i] == '\n' || raw_line[i] == '\r')
 				err = true;
 	if (err)
