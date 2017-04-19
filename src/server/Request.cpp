@@ -22,6 +22,9 @@ Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
     m_conn = conn;
+    m_path = std::string();
+    m_version = std::string();
+    m_method = std::string();
     std::string request_line;
     while (request_line = parse_raw_line(), request_line.compare("\r\n")) {
     	yy_scan_string(request_line.c_str());
