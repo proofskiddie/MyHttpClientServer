@@ -27,7 +27,7 @@ Request::Request(Config *config, TcpConnection *conn)
     YY_BUFFER_STATE buf;
     yylex_init(&scanner);
     while (request_line = parse_raw_line(), request_line.compare("\r\n")) {
-	buf = yy_scan_string(request_line, scanner);
+	buf = yy_scan_string(request_line.c_str(), scanner);
 	yylex(scanner);
 	/*
 	yy_scan_string(request_line.c_str());
