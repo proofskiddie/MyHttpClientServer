@@ -60,7 +60,7 @@ void Request::parse_route(std::string& raw_line)
 			if (raw_line[i] == '\n' || raw_line[i] == '\r')
 				err = true;
 	if (err)
-		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+		throw RequestError(HttpStatus::MethodNotAllowed, "400 Bad Request\n");
 	else {
 		m_path = raw_line.substr(0,i);
 		raw_line = raw_line.substr(i);
@@ -84,7 +84,7 @@ void Request::parse_version(std::string& raw_line)
 		m_version = "HTTP/1.1";
 		raw_line = raw_line.substr(8);
 	} else
-		throw RequestError(HttpStatus::BadRequest, "505 HTTP Version Not Supported\n");
+		throw RequestError(HttpStatus::HttpVersionNotSupported, "505 HTTP Version Not Supported\n");
 }
 
 void Request::parse_headers()
