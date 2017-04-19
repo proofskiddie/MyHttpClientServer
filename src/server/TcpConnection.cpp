@@ -16,7 +16,7 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
     m_master(master_fd),
     m_shutdown(false)
 {
-    if (accept(m_master, 0, 0) == -1)
+    if (m_conn = accept(m_master, 0, 0), m_conn == -1)
 	perror("ah ... i dont know anymore");
 }
 

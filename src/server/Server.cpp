@@ -38,7 +38,7 @@ void Server::init()
     	throw SocketError("setsockopt");
      
     struct sockaddr_in addr;
-    //memset(&addr, 0, sizeof(addr));
+    memset(&addr, 0, sizeof(addr));
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
     if (error == -1) throw SocketError("bind");
