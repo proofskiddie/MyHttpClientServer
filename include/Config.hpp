@@ -30,10 +30,6 @@ public:
     **/
     void print() const;
 
-    /**
-     * :: TODO ::
-     * Create the config object by parsing argc and argv.
-    **/
     Config(int argc, char** argv);
 };
 #endif

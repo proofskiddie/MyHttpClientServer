@@ -19,5 +19,6 @@ void TextController::run(Request const& req, Response& res) const
     res.set_status(HttpStatus::Ok);
     res.set_header("Content-Type", "text/plain");
     res.set_header("Content-Length", std::to_string(m_response.size()));
+
     res.send(m_response.c_str(), m_response.size());
 }
