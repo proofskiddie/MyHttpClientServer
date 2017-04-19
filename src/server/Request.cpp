@@ -23,7 +23,8 @@ Request::Request(Config *config, TcpConnection *conn)
     m_config = config;
     m_conn = conn;
     std::string request_line;
-    while (request_line = parse_raw_line(), request_line.compare("\r\n")) {
+    int lim = 10;
+    while (request_line = parse_raw_line(), --lim && request_line.compare("\r\n")) {
 	yy_scan_string(request_line.c_str());
 	yyparse();
 	/*
