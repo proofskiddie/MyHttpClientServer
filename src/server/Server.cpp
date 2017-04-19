@@ -30,21 +30,20 @@ Server::Server() {}
 
 void Server::init()
 {
-    throw SocketError("hailmary");
     m_master = socket(AF_INET, SOCK_STREAM, 0);
-    if (m_master == -1) SocketError("socket") ;
+    if (m_master == -1) throw SocketError("socket") ;
     
     int optval = 1;
     if (setsockopt(m_master, SOL_SOCKET, SO_REUSEADDR, &optval, sizeof(int)) == -1)
-    	SocketError("setsockopt");
+    	throw SocketError("setsockopt");
      
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
-    if (error == -1) SocketError("bind");
+    if (error == -1) throw SocketError("bind");
     error = listen(m_master, m_config->queue_length);
-    if (error == -1) SocketError("listen");
+    if (error == -1) throw SocketError("listen");
 }
 void Server::set_config(Config *config) {
 	m_config = config;
