@@ -35,49 +35,52 @@ Request::Request(Config *config, TcpConnection *conn)
 
 void Request::parse_method(std::string& raw_line)
 {
-
+	if (raw_line.substr(3).compare("GET")) {
+		m_method = "GET";
+		raw_line = raw_line.substr(3, raw_line.size());
+	} else if (raw_line.substr(4).compare("POST") {
+		m_method = "POST";
+		raw_line = raw_line.substr(4, raw_line.size());
+	} else
+		throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
 }
 
 void Request::parse_route(std::string& raw_line)
 {
-    throw TodoError("2", "You have to implement parsing routes");
+	int i = 0;
+	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
+	raw_line = raw_line.substr(i, raw_line.size());
 }
 
 void Request::parse_querystring(std::string query, std::unordered_map<std::string, std::string>& parsed)
 {
-    throw TodoError("6", "You have to implement parsing querystrings");
 }
 
 void Request::parse_version(std::string& raw_line)
 {
-    throw TodoError("2", "You have to implement parsing HTTP version");
 }
 
 void Request::parse_headers()
 {
-    throw TodoError("2", "You have to implement parsing headers");
 }
 
 void Request::parse_body()
 {
     if (m_method == "GET") return;
 
-    throw TodoError("6", "You have to implement parsing request bodies");
 }
 
 std::string Request::parse_raw_line()
 {
 	unsigned char c;
-	bool brk = false;
+	int bsen = 0;
 	std::string s;
 	while (m_conn->getc(&c)) {
 		s += c;
-		if (c == '\r')
-			brk = true;
-		else if (c == '\n' && brk)
-			return s;
-	        else if (brk)
-			brk = false;
+		if ((bsen == 0 || bsen == 2) && c == '\r') ++bsen;
+		else if ((bsen == 1 || bsen == 3) && c == '\n') ++bsen;
+		else if (bsen == 4) return s;
+		else bsen = 0;
 	}
 	return s;
 }
