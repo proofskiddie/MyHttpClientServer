@@ -135,7 +135,7 @@ void Server::handle(TcpConnection* conn) //const
     }
     
     // Dont forget about freeing memory!
-    delete controller;
+    //delete controller;
     delete req;
 }
 
