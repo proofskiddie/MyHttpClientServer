@@ -39,7 +39,7 @@ void TcpConnection::shutdown()
 bool TcpConnection::getc(unsigned char* c) const
 {	
 	int ret;
-	if (ret = recv(m_master, c, 1, MSG_WAITALL), ret < 0)
+	if (ret = recv(m_conn, c, 1, MSG_WAITALL), ret < 0)
 		throw SocketError("getc");
 	return (ret == 0)? false : true;
 }
