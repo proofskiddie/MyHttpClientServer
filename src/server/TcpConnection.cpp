@@ -45,15 +45,18 @@ bool TcpConnection::getc(unsigned char* c) const
 
 void TcpConnection::putc(unsigned char c)
 {
-	write(m_master, &c, 1);
+	if (write(m_master, &c, 1) == -1)
+		perror("error");
 }
 
 void TcpConnection::puts(std::string const& str)
 {
-	write(m_master, str.c_str(), str.size());
+	if (write(m_master, str.c_str(), str.size()) == -1)
+		perror("error");
 }
 
 void TcpConnection::putbuf(void const* buf, size_t bufsize)
 {
-	write(m_master, buf, bufsize);
+	if (write(m_master, buf, bufsize) == -1)
+		perror("error");
 }
