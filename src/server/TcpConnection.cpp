@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include <cstring>
 #include <sys/socket.h>
+#include <sys/ioctl.h>
 
 #include "Utils.hpp"
 #include "Config.hpp"
