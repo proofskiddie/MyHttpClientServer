@@ -18,6 +18,7 @@ TcpConnection::TcpConnection(Config const& config, int master_fd) :
 {
     if (accept(m_master, 0, 0) == -1)
 	perror("ah ... i dont know anymore");
+    exit(1);
 }
 
 TcpConnection::~TcpConnection() noexcept
