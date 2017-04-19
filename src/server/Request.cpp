@@ -23,11 +23,10 @@ Request::Request(Config *config, TcpConnection *conn)
     m_config = config;
     m_conn = conn;
     std::string request_line;
-    int lim = 10;
-    while (request_line = parse_raw_line(), --lim && request_line.compare("\r\n")) {
+    while (request_line = parse_raw_line(), request_line.compare("\r\n")) {
     	yy_scan_string(request_line.c_str());
 	yylex();
-	yyparse();
+	if (yyparse() == 1) break;
 	yy_delete_buffer(YY_CURRENT_BUFFER);
     }
     if (!request_line.empty())
