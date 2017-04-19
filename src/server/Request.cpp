@@ -79,7 +79,8 @@ std::string Request::parse_raw_line()
 		s += c;
 		if ((bsen == 0 || bsen == 2) && c == '\r') ++bsen;
 		else if ((bsen == 1 || bsen == 3) && c == '\n') {
-			if (bsen == 3) return s;
+			++bsen;
+			if (bsen == 4) return s;
 		} else bsen = 0;
 	}
 	return s;
