@@ -18,7 +18,6 @@ public:
      * Initializes the base Controller class with the given config.
     **/
     Controller(Config const& config);
-    ~Controller() {}
     /**
      * Declares the destructor as virtual.
      * Why would we want to do this?
