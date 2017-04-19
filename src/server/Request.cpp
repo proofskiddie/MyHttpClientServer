@@ -25,7 +25,7 @@ Request::Request(Config *config, TcpConnection *conn)
     std::string request_line;
     int lim = 10;
     while (request_line = parse_raw_line(), --lim && request_line.compare("\r\n")) {
-	yy_scan_string(request_line.c_str());
+	yy_scan_string("GET /hello-world /HTTP/1.0\r\n");
 	yyparse();
 	/*
 	yy_scan_string(request_line.c_str());
