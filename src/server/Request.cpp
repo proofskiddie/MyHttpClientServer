@@ -45,7 +45,7 @@ void Request::parse_method(std::string& raw_line)
 		m_method = "POST";
 		raw_line = raw_line.substr(4);
 	} else
-		throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
+		throw RequestError(HttpStatus::MethodNotAllowed, "405 Method Not Allowed\n");
 }
 
 void Request::parse_route(std::string& raw_line)
@@ -60,7 +60,7 @@ void Request::parse_route(std::string& raw_line)
 			if (raw_line[i] == '\n' || raw_line[i] == '\r')
 				err = true;
 	if (err)
-		throw RequestError(HttpStatus::MethodNotAllowed, "400 Bad Request\n");
+		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
 	else {
 		m_path = raw_line.substr(0,i);
 		raw_line = raw_line.substr(i);
