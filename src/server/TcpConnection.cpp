@@ -39,7 +39,7 @@ void TcpConnection::shutdown()
 bool TcpConnection::getc(unsigned char* c) const
 {	
 	int ret;
-	while (ret = read(m_master, c, 1), ret != 1 && ret != -1);
+	while (ret = read(m_master, c, 1), ret != 1);
 	return (ret == -1)? false : true;
 }
 
