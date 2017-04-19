@@ -135,10 +135,8 @@ void Server::handle(TcpConnection* conn) //const
     }
     
     // Dont forget about freeing memory!
-    if (controller != nullptr)
-    	delete controller;
-    if (req != nullptr)
-    	delete req;
+    delete controller;
+    delete req;
 }
 
 Server::~Server() noexcept
