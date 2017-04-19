@@ -26,23 +26,13 @@ TESTALL_OUTPUT := http-out
 
 MAKE_INFO := MAKE ::
 
-all: git-commit parse server
+all: git-commit server
 
 server: prelude $(PROGRAM)
-
-parse: yacc lex
 
 prelude:
 	@mkdir -p $(BUILD_DIR)
 	@mkdir -p $(EXEC_DIR)
-
-yacc: 
-	yacc $(SOURCE_DIR)/$(PARSE_DIR)/http.y -d
-	mv ./y.tab.h $(SOURCE_DIR)/$(PARSE_DIR)/
-	mv ./y.tab.c $(SOURCE_DIR)/$(PARSE_DIR)/
-lex:
-	lex $(SOURCE_DIR)/$(PARSE_DIR)/http.l
-	mv ./lex.yy.c $(SOURCE_DIR)/$(PARSE_DIR)/
 
 $(BUILD_DIR)/%.o: %.cpp
 	@echo $(MAKE_INFO) "Building $<..."
