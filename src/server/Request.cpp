@@ -24,6 +24,7 @@ Request::Request(Config *config, TcpConnection *conn)
     m_conn = conn;
     m_method ="GET";
     m_path = "/hello-world";       
+    m_version = "HTTP/1.1";
     /*
     std::string request_line = parse_raw_line();
     yy_scan_string(request_line.c_str());
