@@ -22,7 +22,6 @@ Request::Request(Config *config, TcpConnection *conn)
     m_conn = conn;
     std::string request_line = parse_raw_line();
     parse_method(request_line);
-    /*
     parse_route(request_line);
     parse_version(request_line);
     parse_headers();
@@ -32,13 +31,11 @@ Request::Request(Config *config, TcpConnection *conn)
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
-    */
 }
 
 void Request::parse_method(std::string& raw_line)
 {
-	std::vector<std::string> vec = parse_http_request(raw_line);
-	if (parse_error) throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
+
 }
 
 void Request::parse_route(std::string& raw_line)
