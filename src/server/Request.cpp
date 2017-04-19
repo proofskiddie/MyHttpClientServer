@@ -32,12 +32,12 @@ Request::Request(Config *config, TcpConnection *conn)
     //parse_method(request_line);
     //parse_route(request_line);
     //parse_version(request_line);
-    */
     // the previous three parse_* calls should consume the entire line
     if (!request_line.empty())
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
+    */
 
     //parse_headers();
     //parse_body();
