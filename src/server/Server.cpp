@@ -39,8 +39,8 @@ void Server::init()
      
     struct sockaddr_in addr;
     memset(&addr, 0, sizeof(addr));
-    sockaddr_in.sin_family = AF_INET;
-    sockaddr_in.sin_port = htons(m_config->port);
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(m_config->port);
     
     int error = bind(m_master, (struct sockaddr *)&addr, sizeof(addr));
     if (error == -1) throw SocketError("bind");
