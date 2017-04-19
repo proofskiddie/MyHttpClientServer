@@ -133,11 +133,12 @@ void Server::handle(TcpConnection* conn) //const
     {
         d_errorf("You tried to use unimplemented functionality: %s", e.what());
     }
-    /*
+    
     // Dont forget about freeing memory!
-    delete controller;
-    delete req;
-    */
+    if (controller != nullptr)
+    	delete controller;
+    if (req != nullptr)
+    	delete req;
 }
 
 Server::~Server() noexcept
