@@ -46,18 +46,18 @@ bool TcpConnection::getc(unsigned char* c) const
 
 void TcpConnection::putc(unsigned char c)
 {
-	if (write(m_master, &c, 1) == -1)
+	if (write(m_conn, &c, 1) == -1)
 		throw SocketError("putc");
 }
 
 void TcpConnection::puts(std::string const& str)
 {
-	if (write(m_master, str.c_str(), str.size()) == -1)
+	if (write(m_conn, str.c_str(), str.size()) == -1)
 		throw SocketError("puts");		
 }
 
 void TcpConnection::putbuf(void const* buf, size_t bufsize)
 {
-	if (write(m_master, buf, bufsize) == -1)
+	if (write(m_conn, buf, bufsize) == -1)
 		throw SocketError("putbuf");
 }
