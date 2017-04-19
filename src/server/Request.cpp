@@ -70,9 +70,17 @@ void Request::parse_body()
 std::string Request::parse_raw_line()
 {
 	unsigned char c;
+	bool brk = false;
 	std::string s;
-	while (m_conn->getc(&c))
+	while (m_conn->getc(&c)) {
 		s += c;
+		if (c == '\r')
+			brk = true;
+		else if (c == '\n' && brk)
+			return s;
+	        else if (brk)
+			brk = false;
+	}
 	return s;
 }
 
