@@ -27,6 +27,7 @@ Request::Request(Config *config, TcpConnection *conn)
     while (request_line = parse_raw_line(), --lim && request_line.compare("\r\n")) {
     	yy_scan_string(request_line.c_str());
 	yylex();
+	yyparse();
 	yy_delete_buffer(YY_CURRENT_BUFFER);
     }
     if (!request_line.empty())
