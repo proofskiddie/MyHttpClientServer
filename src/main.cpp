@@ -11,7 +11,6 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-Server Server::server;
 
 int main(int argc, char** argv)
 {
@@ -22,25 +21,24 @@ int main(int argc, char** argv)
     try 
     {
         Config config(argc, argv);
-        Server::server.set_config(&config);
-	Server::server.init();
+        Server server(&config);
 	config.print();
 
         if (config.mode == Config::SM_LINEAR)
         {
-           Server::server.run_linear();
+           server.run_linear();
         }
         else if (config.mode == Config::SM_REQUESTTHREAD)
         {
-            Server::server.run_thread_request();
+            server.run_thread_request();
         }
         else if (config.mode == Config::SM_FORK)
         {
-            Server::server.run_fork();
+            server.run_fork();
         }
         else if (config.mode == Config::SM_POOLTHREAD)
         {
-            Server::server.run_thread_pool();
+            server.run_thread_pool();
         }
         else
         {

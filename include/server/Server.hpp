@@ -29,7 +29,6 @@ public:
     **/
     Request *req;
     Server(Config *);
-    static Server server;
     /**
      * :: TODO ::
      * The server destructor should release resources acquired in the constructor.
