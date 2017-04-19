@@ -22,15 +22,17 @@ Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
     m_conn = conn;
+    m_path = "/hello-world";       
+    /*
     std::string request_line = parse_raw_line();
     yy_scan_string(request_line.c_str());
     yylex();
     yyparse();
-    //yy_delete_buffer(YY_CURRENT_BUFFER);
+    yy_delete_buffer(YY_CURRENT_BUFFER);
     //parse_method(request_line);
     //parse_route(request_line);
     //parse_version(request_line);
-
+    */
     // the previous three parse_* calls should consume the entire line
     if (!request_line.empty())
     {
