@@ -38,10 +38,10 @@ Request::Request(Config *config, TcpConnection *conn)
 
 void Request::parse_method(std::string& raw_line)
 {
-	if (!raw_line.substr(3).compare("GET")) {
+	if (!raw_line.substr(0,3).compare("GET")) {
 		m_method = "GET";
 		raw_line = raw_line.substr(3);
-	} else if (!raw_line.substr(4).compare("POST")) {
+	} else if (!raw_line.substr(0,4).compare("POST")) {
 		m_method = "POST";
 		raw_line = raw_line.substr(4);
 	} else
@@ -77,10 +77,10 @@ void Request::parse_version(std::string& raw_line)
 	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
 	raw_line = raw_line.substr(i);
 	
-	if (!raw_line.substr(8).compare("HTTP/1.0")) {
+	if (!raw_line.substr(0,8).compare("HTTP/1.0")) {
 		m_version = "HTTP/1.0";
 		raw_line = raw_line.substr(8);
-	} else if (!raw_line.substr(8).compare("HTTP/1.1")) {
+	} else if (!raw_line.substr(0,8).compare("HTTP/1.1")) {
 		m_version = "HTTP/1.1";
 		raw_line = raw_line.substr(8);
 	} else
