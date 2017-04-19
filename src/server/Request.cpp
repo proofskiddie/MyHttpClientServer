@@ -26,18 +26,18 @@ Request::Request(Config *config, TcpConnection *conn)
     parse_version(request_line);
     parse_headers();
     parse_body();
-
+    /*
     if (!request_line.empty())
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
+    */
 }
 
 void Request::parse_method(std::string& raw_line)
 {
 	if (raw_line.substr(3).compare("GET")) {
 		m_method = "GET";
-		printf("hey\n");
 		raw_line = raw_line.substr(3, raw_line.size());
 	} else if (raw_line.substr(4).compare("POST")) {
 		m_method = "POST";
@@ -51,6 +51,18 @@ void Request::parse_route(std::string& raw_line)
 	int i = 0;
 	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
 	raw_line = raw_line.substr(i, raw_line.size());
+	bool err = false;
+	if (raw_line[0] != '/') err = true;
+	else 
+		for (i = 0; raw_line[i] != ' ' && raw_line != '\t'; ++i)
+			if (raw_line[i] == '\n' || raw_line[i] == '\r')
+				err = true;
+	if (err)
+		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+	else {
+		m_path = raw_line.substr(i);
+		raw_line = raw_line.substr(i, raw_line.size());
+	}	
 }
 
 void Request::parse_querystring(std::string query, std::unordered_map<std::string, std::string>& parsed)
@@ -59,6 +71,18 @@ void Request::parse_querystring(std::string query, std::unordered_map<std::strin
 
 void Request::parse_version(std::string& raw_line)
 {
+	int i = 0;
+	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
+	raw_line = raw_line.substr(i, raw_line.size());
+	
+	if (raw_line.substr(8).compare("HTTP/1.0")) {
+		m_method = "HTTP/1.0";
+		raw_line = raw_line.substr(8, raw_line.size());
+	} else if (raw_line.substr(8).compare("HTTP/1.1")) {
+		m_method = "HTTP/1.1";
+		raw_line = raw_line.substr(8, raw_line.size());
+	} else
+		throw RequestError(HttpStatus::BadRequest, "405 Method Not Allowed\n");
 }
 
 void Request::parse_headers()
