@@ -33,6 +33,7 @@ void Response::send_headers()
 {
     for (auto const& element : m_headers) 
 	m_conn.puts( element.first + ": " + element.second + "\r\n");
+    m_header_sent = true;
 }
 
 void Response::set_header(std::string const& key, std::string const& value)

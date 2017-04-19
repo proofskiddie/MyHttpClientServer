@@ -31,8 +31,8 @@ void TcpConnection::shutdown()
 {
     d_printf("Shutting down connection on %d", m_conn);
     
-    if (shutdown(m_conn, SHUT_RDWR) == -1) d_errorf("Could not shut down connection %d", m_conn);
-
+    if (::shutdown(m_conn, SHUT_RDWR) == -1) d_errorf("Could not shut down connection %d", m_conn);
+    
     m_shutdown = true;
 }
 
