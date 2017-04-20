@@ -25,7 +25,7 @@ Request::Request(Config *config, TcpConnection *conn)
 	    parse_method(request_line);
 	    parse_route(request_line);
 	    parse_version(request_line);
-	    parse_headers(request_line);
+	    parse_headers();
 	    parse_body();
     }
     /*
@@ -87,133 +87,93 @@ void Request::parse_version(std::string& raw_line)
 		throw RequestError(HttpStatus::HttpVersionNotSupported, "505 HTTP Version Not Supported\n");
 }
 
-void Request::parse_headers(std::string &raw_line)
+void Request::parse_headers()
 {
 	
-	int i = 0;
-	while (raw_line.size() > 2) {
-		while (i < raw_line.size() & (raw_line[i] == ' ' || raw_line[i] == '\t')) ++i;
-		raw_line = raw_line.substr(i);
-		if (!raw_line.compare("\r\n\r\n")) return;
-		
-		bool err = false;
-		std::string key, value;
-		for (i = 0; i < raw_line.size() && raw_line[i] != ':' ; ++i)
-			if (raw_line[i] == '\n' || raw_line[i] == '\r')
-				err = true;
-		if (err)
-			throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
-		else {
-			key = raw_line.substr(0,i);
-			key.erase(remove(key.begin(),key.end(),' '),key.end());
-			raw_line = raw_line.substr(i+1);
-		}
-		
-
-		i = 0;
-		while (i < raw_line.size() & (raw_line[i] == ' ' || raw_line[i] == '\t')) ++i;
-		raw_line = raw_line.substr(i);
-		
-		err = true;
-		for (i = 0; i < raw_line.size() - 1 ; ++i)
-			if (raw_line[i] == '\r' && raw_line[i+1] == '\n') {
-				i = i + 2;
-				err = false;
-				break;
-			}
-		if (err)
-			throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
-		else {
-			value= raw_line.substr(0,i);
-			raw_line = raw_line.substr(i);
-		}
-		m_headers.add(key,value);
-		if (!raw_line.compare("\r\n")) break;
-	}
 }
 
-	void Request::parse_body()
-	{
-	    if (m_method == "GET") return;
+void Request::parse_body()
+{
+    if (m_method == "GET") return;
 
+}
+
+std::string Request::parse_req_line()
+{
+	unsigned char c;
+	int bsen = 0;
+	std::string s;
+	while (m_conn->getc(&c)) {
+		s += c;
+		if ((bsen == 0 || bsen == 2) && c == '\r') ++bsen;
+		else if ((bsen == 1 || bsen == 3) && c == '\n') {
+			++bsen;
+			if (bsen == 4) return s;
+		} else bsen = 0;
 	}
+	return s;
+}
 
-	std::string Request::parse_raw_line()
-	{
-		unsigned char c;
-		int bsen = 0;
-		std::string s;
-		while (m_conn->getc(&c)) {
-			s += c;
-			if ((bsen == 0 || bsen == 2) && c == '\r') ++bsen;
-			else if ((bsen == 1 || bsen == 3) && c == '\n') {
-				++bsen;
-				if (bsen == 4) return s;
-			} else bsen = 0;
-		}
-		return s;
-	}
+void Request::print() const noexcept
+{
+    std::cout << m_method << ' ' << m_path << ' ' << m_version << std::endl;
+#ifdef DEBUG    
+    for (auto const& el : m_headers)
+    {
+	std::cout << el.first << ": " << el.second << std::endl;
+    }
 
-	void Request::print() const noexcept
-	{
-	    std::cout << m_method << ' ' << m_path << ' ' << m_version << std::endl;
-	#ifdef DEBUG    
-	    for (auto const& el : m_headers)
-	    {
-		std::cout << el.first << ": " << el.second << std::endl;
-	    }
+    for (auto const& el : m_query)
+    {
+	std::cerr << el.first << ": " << el.second << std::endl;
+    }
 
-	    for (auto const& el : m_query)
-	    {
-		std::cerr << el.first << ": " << el.second << std::endl;
-	    }
+    for (auto const& el : m_body_data)
+    {
+	std::cerr << el.first << ": " << el.second << std::endl;
+    }
+#endif	
+}
 
-	    for (auto const& el : m_body_data)
-	    {
-		std::cerr << el.first << ": " << el.second << std::endl;
-	    }
-	#endif	
-	}
+bool Request::try_header(std::string const& key, std::string& value) const noexcept
+{
+    if (m_headers.find(key) == m_headers.end())
+    {
+	return false;
+    }
+    else
+    {
+	value = m_headers.at(key);
+	return true;
+    }
+}
 
-	bool Request::try_header(std::string const& key, std::string& value) const noexcept
-	{
-	    if (m_headers.find(key) == m_headers.end())
-	    {
-		return false;
-	    }
-	    else
-	    {
-		value = m_headers.at(key);
-		return true;
-	    }
-	}
+std::string const& Request::get_path() const noexcept
+{
+    return m_path;
+}
 
-	std::string const& Request::get_path() const noexcept
-	{
-	    return m_path;
-	}
+std::string const& Request::get_method() const noexcept
+{
+    return m_method;
+}
 
-	std::string const& Request::get_method() const noexcept
-	{
-	    return m_method;
-	}
+std::string const& Request::get_version() const noexcept
+{
+    return m_version;
+}
 
-	std::string const& Request::get_version() const noexcept
-	{
-	    return m_version;
-	}
+std::unordered_map<std::string, std::string> const& Request::get_headers() const noexcept
+{
+    return m_headers;
+}
 
-	std::unordered_map<std::string, std::string> const& Request::get_headers() const noexcept
-	{
-	    return m_headers;
-	}
+std::unordered_map<std::string, std::string> const& Request::get_query() const noexcept
+{
+    return m_query;
+}
 
-	std::unordered_map<std::string, std::string> const& Request::get_query() const noexcept
-	{
-	    return m_query;
-	}
-
-	std::unordered_map<std::string, std::string> const& Request::get_body() const noexcept
-	{
-	    return m_body_data;
-	}
+std::unordered_map<std::string, std::string> const& Request::get_body() const noexcept
+{
+    return m_body_data;
+}
