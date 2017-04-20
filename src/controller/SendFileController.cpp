@@ -23,12 +23,13 @@ SendFileController::SendFileController(Config const& config) :
 
 void SendFileController::run(Request const& req, Response& res) const
 {
-    throw TodoError("4", "You need to implement SendFileController");
+	
+	
 }
 
 int SendFileController::get_content_length(std::fstream& fs) const
 {
-    throw TodoError("4", "You need to implement getting the length of a file");
+	
 }
 
 // unfortunately, the only semi-reliable way to get MIME types of files is

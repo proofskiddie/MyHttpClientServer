@@ -58,5 +58,5 @@ void Controller::send_error_response(Config const& config, TcpConnection* conn, 
 
 bool Controller::resolve_requested_path(std::string const& requested, std::string const& basedir, std::string& resolved) const noexcept
 {
-    throw TodoError("4", "You need to implement resolving request paths");
+	
 }
