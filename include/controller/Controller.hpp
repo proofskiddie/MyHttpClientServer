@@ -37,7 +37,7 @@ public:
      * Make sure you use realpath() properly to make sure that requests do not traverse across your filesystem!
     **/
     bool resolve_requested_path(std::string const& requested, std::string const& basedir, std::string& resolved) const noexcept;
-
+    std::string real_path (std::string const& basedir) const noexcept;
     /**
      * These static methods are conveniences that can be used whenever we need to send a basic error response.
      * The first method is for when we already have a response object -- such as in a controller.
