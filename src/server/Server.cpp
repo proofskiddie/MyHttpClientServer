@@ -58,6 +58,17 @@ void Server::run_linear() //const
 
 void Server::run_thread_request() //const
 {
+    while (true)
+    {
+        TcpConnection* conn = new TcpConnection(*m_config, m_master);
+	int pid = fork();
+	if (pid == 0) {
+		handle(conn);
+		delete conn;
+		_exit(0);
+	}
+	delete conn;
+    } 
 }
 
 void Server::run_fork() //const
@@ -69,8 +80,9 @@ void Server::run_fork() //const
 	if (pid == 0) {
 		handle(conn);
 		delete conn;
-		_exit(1);
+		_exit(0);
 	}
+	delete conn;
     }
 }
 
