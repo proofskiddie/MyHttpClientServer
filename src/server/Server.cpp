@@ -61,12 +61,11 @@ void Server::run_thread_request() //const
     while (true)
     {
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
-	if (m_config.mode == 'F') {
-		int pid = fork();
-		if (pid == 0) {
-			handle(conn);
-			delete conn;
-			_exit(1);
+	int pid = fork();
+	if (pid == 0) {
+		handle(conn);
+		delete conn;
+		_exit(1);
 	}
     }
 }
