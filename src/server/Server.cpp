@@ -57,15 +57,14 @@ void Server::run_linear()
 
 void Server::run_thread_request() //const
 {
-    std::thread thread;
-    threads[i] = std::thread( [this] () -> void {
-	while(1) {
-		TcpConnection *conn = new TcpConnection(*m_config, m_master);
+    while (1) {
+        TcpConnection *conn = new TcpConnection(*m_config, m_master);
+        std::thread thread = std::thread( [this,conn] () -> void {
 		this->handle(conn);
-		delete conn;	
-	}
-    });
-    thread.detach();
+	       	delete conn;	
+        });
+        thread.detach();
+    }
 }
 
 void Server::run_fork() //const
