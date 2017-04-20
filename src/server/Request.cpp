@@ -58,7 +58,7 @@ void Request::parse_route(std::string& raw_line)
 			if (raw_line[i] == '\n' || raw_line[i] == '\r')
 				err = true;
 	if (err)
-		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+		throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
 	else {
 		m_path = raw_line.substr(0,i);
 		raw_line = raw_line.substr(i);
@@ -88,7 +88,7 @@ void Request::parse_version(std::string& raw_line)
 	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
 	raw_line = raw_line.substr(i);
 	if (raw_line.substr(0,2).compare("\r\n"))
-		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+		throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
 	raw_line = raw_line.substr(2);
 }
 
@@ -98,21 +98,24 @@ void Request::parse_headers()
 	std::string raw_line;
 	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
 		if (pos = raw_line.find(':'), pos == std::string::npos) 
-			throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+			throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
 		else m_headers[parse_key(raw_line.substr(0,pos))] = raw_line.substr(pos);
 	}
 }
 
 std::string Request::parse_key(std::string key) {
 	unsigned int i = 0, j = 0;
+	std::string tail;
 	while (i < key.size() && (key[i] == ' ' || key[i] == '\t')) ++i;
 	key = key.substr(i);
 	j = i;
 	while (j < key.size() && (key[j] != ' ' && key[j] != '\t')) ++j;
 	key = key.substr(i,j);
-	while (j < key.size() && (key[j] == ' ' || key[j] == '\t')) ++j;
-	if (j != key.size())
-		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+	tail = key.substr(j);
+	j = 0;
+	while (j < tail.size() && (tail[j] == ' ' || tail[j] == '\t')) ++j;
+	if (j != tail.size())
+		throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
 	return key;
 }
 
