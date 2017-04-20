@@ -96,7 +96,7 @@ void Request::parse_version(std::string& raw_line)
 
 void Request::parse_headers()
 {
-	int pos;
+	size_t pos;
 	std::string raw_line;
 	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
 		if (pos = raw_line.find(':'), pos == std::string::npos) 
