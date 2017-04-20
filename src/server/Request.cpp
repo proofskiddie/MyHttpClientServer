@@ -85,10 +85,37 @@ void Request::parse_version(std::string& raw_line)
 		raw_line = raw_line.substr(8);
 	} else
 		throw RequestError(HttpStatus::HttpVersionNotSupported, "505 HTTP Version Not Supported\n");
+	
+	i = 0;
+	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
+	raw_line = raw_line.substr(i);
+	if (raw_line.substr(0,2).compare("\r\n"))
+		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+	raw_line = raw_line.substr(2);
 }
 
 void Request::parse_headers()
 {
+	int pos;
+	std::string raw_line;
+	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
+		if (pos = raw_line.find(':'), pos == std::string::npos) 
+			throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+		else m_headers.add(parse_key(raw_line.substr(0,pos)),raw_line.substr(pos));
+	}
+}
+
+std::string Request::parse_key(std::string &key) {
+	int i = 0, j = 0;
+	while (i < key.size() && (key[i] == ' ' || key[i] == '\t')) ++i;
+	key = key.substr(i);
+	j = i;
+	while (j < key.size() && (key[j] != ' ' && key[j] != '\t')) ++j;
+	key = key.substr(i,j);
+	while (j < key.size() && (key[j] == ' ' || key[j] == '\t')) ++j;
+	if (j != key.size())
+		throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
+	return key;
 }
 
 void Request::parse_body()
@@ -100,30 +127,14 @@ void Request::parse_body()
 std::string Request::parse_req_line()
 {
 	unsigned char c;
-	int bsen = 0;
+	bool brkcond = false;
 	std::string s;
 	while (m_conn->getc(&c)) {
 		s += c;
-		if ((bsen == 0 || bsen == 2) && c == '\r') ++bsen;
-		else if ((bsen == 1 || bsen == 3) && c == '\n') {
-			++bsen;
-			if (bsen == 4) return s;
-		} else bsen = 0;
-	}
-	return s;
-}
-
-std::string Request::parse_header_line()
-{
-	unsigned char c;
-	int bsen = 0;
-	std::string s;
-	while (m_conn->getc(&c)) {
-		s += c;
-		if ((bsen == 0) && c == '\r') ++bsen;
-		else if ((bsen == 1) && c == '\n')
+		if (c == '\r') brkcond = true;
+		else if (brkcond && c == '\n') {
 			return s;
-		else bsen = 0;
+		} else brkcond = false;
 	}
 	return s;
 }

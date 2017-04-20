@@ -62,13 +62,22 @@ void Controller::send_error_response(Config const& config, TcpConnection* conn, 
     }
 }
 
-bool Controller::resolve_requested_path(std::string const& requested, std::string const& basedir, std::string& resolved) const noexcept {}
+bool Controller::resolve_requested_path(std::string const& requested, std::string const& basedir, std::string& resolved) const noexcept {
+	std::string request = real_path(requested);
+	std::string com_path = real_path(basedir) + requested;
+	bool ret = false;
+	if (!com_path.compare(request)) {
+		ret = true;
+		resolved = com_path;
+	}
+	return ret;
+}
 
 std::string Controller::real_path (std::string const& basedir) const noexcept {
     int child_stdout[2];
     if (pipe(child_stdout) == -1)
     {
-        throw ControllerError("Could not create pipe to communicate with `xdg-mime`");
+        throw ControllerError("Could not create pipe to communicate with `realpath`");
     }
 
     d_printf("Getting content type. child_stdout = {%d, %d}", child_stdout[0], child_stdout[1]);
@@ -101,7 +110,7 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
 
     if ((WIFEXITED(status) && WEXITSTATUS(status) != 0) || WIFSIGNALED(status))
     {
-        throw ControllerError("`xdg-mime` exited with errors");
+        throw ControllerError("`realpath` exited with errors");
     }
 
     size_t const max_content_length = 50;
@@ -110,7 +119,7 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
 
     if (read(child_stdout[0], buf, max_content_length - 1) == -1)
     {
-        throw ControllerError("Could not read output of `xdg-mime`");
+        throw ControllerError("Could not read output of `realpath`");
     }
 
     if (close(child_stdout[0]) == -1)
