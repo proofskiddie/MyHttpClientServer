@@ -101,7 +101,7 @@ void Request::parse_headers()
 	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
 		if (pos = raw_line.find(':'), pos == std::string::npos) 
 			throw RequestError(HttpStatus::BadRequest, "400 Bad Request\n");
-		else m_headers[parse_key(raw_line.substr(0,pos)] = raw_line.substr(pos);
+		else m_headers[parse_key(raw_line.substr(0,pos))] = raw_line.substr(pos);
 	}
 }
 
