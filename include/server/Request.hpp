@@ -93,11 +93,12 @@ private:
 
     /**
      * :: TODO ::
-     * parse_headers() will keep reading lines until it finds a line of length 0 (if parse_raw_line()
+     * parse_headers() will keep reading lines until it finds a line of length 0 (if parse_req_line()
      * cuts off the trailing \r\n) or of length 2 otherwise.
      * For each line it reads, it should parse the header in that line and add it to m_headers
     **/
     void parse_headers();
+    std::string parse_header_line();
 
     /**
      * :: TODO ::
@@ -126,7 +127,7 @@ private:
      * You may choose to either return a string that contains the trailing \r\n or not.
      * If you choose to do so, make sure you account for it in the rest of your code!
     **/
-    std::string parse_raw_line();
+    std::string parse_req_line();
 };
 
 #endif

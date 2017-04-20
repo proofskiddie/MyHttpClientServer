@@ -20,7 +20,7 @@ Request::Request(Config *config, TcpConnection *conn)
 { 
     m_config = config;
     m_conn = conn;
-    std::string request_line = parse_raw_line();
+    std::string request_line = parse_req_line();
     if (request_line.size() != 0) {
 	    parse_method(request_line);
 	    parse_route(request_line);
@@ -89,7 +89,6 @@ void Request::parse_version(std::string& raw_line)
 
 void Request::parse_headers()
 {
-	
 }
 
 void Request::parse_body()
@@ -110,6 +109,21 @@ std::string Request::parse_req_line()
 			++bsen;
 			if (bsen == 4) return s;
 		} else bsen = 0;
+	}
+	return s;
+}
+
+std::string Request::parse_header_line()
+{
+	unsigned char c;
+	int bsen = 0;
+	std::string s;
+	while (m_conn->getc(&c)) {
+		s += c;
+		if ((bsen == 0) && c == '\r') ++bsen;
+		else if ((bsen == 1) && c == '\n')
+			return s;
+		else bsen = 0;
 	}
 	return s;
 }
