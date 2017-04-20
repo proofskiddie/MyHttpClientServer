@@ -45,7 +45,7 @@ Server::Server(Config *config) : m_config(config){
     if (error == -1) throw SocketError("listen");
 }
 
-static void Server::run_linear() //const
+void Server::run_linear() static
 {
     while (true)
     {
