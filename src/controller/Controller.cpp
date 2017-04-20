@@ -11,6 +11,7 @@
 #include <limits.h>
 
 #include "controller/Controller.hpp"
+#include "error/ControllerError.hpp"
 #include "server/Request.hpp"
 #include "server/Response.hpp"
 #include "server/TcpConnection.hpp"
