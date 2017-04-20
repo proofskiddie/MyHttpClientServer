@@ -54,6 +54,7 @@ void *Server::run_linear() //const
 
         delete conn;
     }
+    return NULL;
 }
 
 void Server::run_thread_request() //const
