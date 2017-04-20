@@ -61,7 +61,7 @@ void Server::run_thread_request() //const
     int num_threads = m_config->threads;
     std::thread threads[num_threads];
     for (int i = 0; i < num_threads; ++i)
-    	threads[i] = std::thread( [this] () -> void { Server::run_linear(); }, i);
+    	threads[i] = std::thread( [this] { Server::run_linear(); }, i);
     for (int i = 0; i < num_threads; ++i)
     	threads[i].join();
 
