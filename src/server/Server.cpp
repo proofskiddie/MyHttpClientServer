@@ -45,7 +45,7 @@ Server::Server(Config *config) : m_config(config){
     if (error == -1) throw SocketError("listen");
 }
 
-void Server::run_linear() static
+void Server::run_linear()
 {
     while (true)
     {
@@ -61,7 +61,7 @@ void Server::run_thread_request() //const
     int num_threads = m_config->threads;
     std::thread threads[num_threads];
     for (int i = 0; i < num_threads; ++i)
-    	threads[i] = std::thread(run_linear, i);
+    	threads[i] = std::thread(&run_linear, i);
     for (int i = 0; i < num_threads; ++i)
     	threads[i].join();
 
