@@ -51,16 +51,7 @@ void Server::run_linear() //const
     {
         std::string response;
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
-	if (m_config->mode == 'F') {
-		int pid = fork();
-		if (pid == 0) {
-			handle(conn);
-			delete conn;
-			_exit(1);
-		}
-	}
-	else
-        	handle(conn);
+        handle(conn);
 
         delete conn;
     }
@@ -73,7 +64,12 @@ void Server::run_thread_request() //const
 
 void Server::run_fork() //const
 {
-    throw TodoError("3", "You need to implement process-per-request mode");
+	int pid = fork();
+	if (pid == 0) {
+		handle(conn);
+		delete conn;
+		_exit(1);
+	}
 }
 
 void Server::run_thread_pool() //const
