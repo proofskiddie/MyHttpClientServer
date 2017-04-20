@@ -58,6 +58,10 @@ void Server::run_linear() //const
 
 void Server::run_thread_request() //const
 {
+}
+
+void Server::run_fork() //const
+{
     while (true)
     {
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
@@ -68,11 +72,6 @@ void Server::run_thread_request() //const
 		_exit(1);
 	}
     }
-}
-
-void Server::run_fork() //const
-{
-    throw TodoError("3", "You need to implement process-per-request mode");
 }
 
 void Server::run_thread_pool() //const
