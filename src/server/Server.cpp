@@ -61,7 +61,7 @@ void Server::run_thread_request() //const
     int num_threads = m_config->threads;
     std::thread threads[num_threads];
     for (int i = 0; i < num_threads; ++i) {
-        TcpConnection *con = new TcpConnection(*m_config, m_master);
+        TcpConnection *conn = new TcpConnection(*m_config, m_master);
     	threads[i] = std::thread( [this, conn] () -> void {
 	   	this->handle(conn);
 		delete conn;
