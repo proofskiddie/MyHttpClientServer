@@ -80,9 +80,11 @@ void Server::run_thread_pool() //const
     std::thread threads[num_threads];
     for (int i = 0; i < num_threads; ++i) {
     	threads[i] = std::thread( [this] () -> void {
-        	TcpConnection *conn = new TcpConnection(*m_config, m_master);
-	   	this->handle(conn);
-		delete conn;
+		while(1) {
+			TcpConnection *conn = new TcpConnection(*m_config, m_master);
+			this->handle(conn);
+			delete conn;	
+		}
 	    });
     } 
     for (int i = 0; i < num_threads; ++i)
