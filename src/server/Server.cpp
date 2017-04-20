@@ -51,7 +51,6 @@ void Server::run_linear()
     {
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
         handle(conn);
-
         delete conn;
     }
 }
