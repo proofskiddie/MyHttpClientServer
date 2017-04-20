@@ -25,7 +25,7 @@ Request::Request(Config *config, TcpConnection *conn)
 	    parse_method(request_line);
 	    parse_route(request_line);
 	    parse_version(request_line);
-	    parse_headers();
+	    parse_headers(request_line);
 	    parse_body();
     }
     /*
@@ -87,7 +87,7 @@ void Request::parse_version(std::string& raw_line)
 		throw RequestError(HttpStatus::HttpVersionNotSupported, "505 HTTP Version Not Supported\n");
 }
 
-void Request::parse_headers()
+void Request::parse_headers(std::string &raw_line)
 {
 	
 	int i = 0;
