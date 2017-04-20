@@ -35,6 +35,7 @@ public:
     std::string const& get_path() const noexcept;
     std::string const& get_method() const noexcept;
     std::string const& get_version() const noexcept;
+    void parse_body();
     std::unordered_map<std::string, std::string> const& get_headers() const noexcept;
     std::unordered_map<std::string, std::string> const& get_query() const noexcept;
     std::unordered_map<std::string, std::string> const& get_body() const noexcept;
