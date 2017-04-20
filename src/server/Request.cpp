@@ -28,12 +28,10 @@ Request::Request(Config *config, TcpConnection *conn)
 	    parse_headers();
 	    parse_body();
     }
-    /*
     if (!request_line.empty())
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
-    */
 }
 
 void Request::parse_method(std::string& raw_line)
