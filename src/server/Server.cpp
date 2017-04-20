@@ -51,7 +51,7 @@ void Server::run_linear() //const
     {
         std::string response;
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
-	if (m_config.mode == 'F') {
+	if (m_config->mode == 'F') {
 		int pid = fork();
 		if (pid == 0) {
 			handle(conn);
