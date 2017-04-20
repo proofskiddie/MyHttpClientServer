@@ -80,20 +80,14 @@ void Server::run_thread_pool() //const
     std::thread threads[num_threads];
     for (int i = 0; i < num_threads; ++i) {
         TcpConnection *conn = new TcpConnection(*m_config, m_master);
-    	threads[i] = std::thread(thread_run_linear);
+    	threads[i] = std::thread( [this, conn] () -> void {
+	   	this->handle(conn);
+		delete conn;
+	    });
     } 
     for (int i = 0; i < num_threads; ++i)
     	threads[i].join();
 
-}
-void thread_run_linear()
-{
-    while (true)
-    {
-        TcpConnection* conn = new TcpConnection(*m_config, m_master);
-        handle(conn);
-        delete conn;
-    }
 }
 
 void Server::handle(TcpConnection* conn) //const
