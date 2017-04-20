@@ -84,7 +84,7 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
         {
             exit(1);
         }
-        execlp("realpath", "realpath", basedir.c_str(), args, 0);
+        execlp("realpath", "realpath", basedir.c_str(), 0);
         exit(1);
     }
 
