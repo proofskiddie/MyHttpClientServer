@@ -105,7 +105,7 @@ void Request::parse_headers()
 	}
 }
 
-std::string Request::parse_key(std::string &key) {
+std::string Request::parse_key(std::string key) {
 	unsigned int i = 0, j = 0;
 	while (i < key.size() && (key[i] == ' ' || key[i] == '\t')) ++i;
 	key = key.substr(i);
