@@ -62,7 +62,7 @@ void Server::run_thread_request() //const
     int num_threads = m_config->threads;
     pthread_t threads[num_threads];
     for (int i = 0; i < num_threads; ++i)
-    	pthread_create(&threads[i], NULL, run_linear(), NULL);
+    	pthread_create(&threads[i], NULL, run_linear, NULL);
     for (int i = 0; i < num_threads; ++i)
     	pthread_join(threads[i], NULL);
 
