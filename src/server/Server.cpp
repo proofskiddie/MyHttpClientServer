@@ -65,7 +65,7 @@ void Server::run_thread_request() //const
     	threads[i] = std::thread( [this, conn] () -> void {
 	   	this->handle(conn);
 		delete conn;
-	    }, i);
+	    });
     } 
     for (int i = 0; i < num_threads; ++i)
     	threads[i].join();
