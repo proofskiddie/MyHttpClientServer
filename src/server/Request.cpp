@@ -99,24 +99,12 @@ void Request::parse_headers()
 	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
 		if (pos = raw_line.find(':'), pos == std::string::npos) 
 			throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
-		else m_headers[parse_key(raw_line.substr(0,pos))] = raw_line.substr(pos);
+		else {
+		        size_t pos;
+			if (pos = raw_line.find(':'), pos == std::string::npos)
+				m_headers[raw_line.substr(0,pos)] = raw_line.substr(pos);
+		}
 	}
-}
-
-std::string Request::parse_key(std::string key) {
-	unsigned int i = 0, j = 0;
-	std::string tail;
-	while (i < key.size() && (key[i] == ' ' || key[i] == '\t')) ++i;
-	key = key.substr(i);
-	j = i;
-	while (j < key.size() && (key[j] != ' ' && key[j] != '\t')) ++j;
-	key = key.substr(i,j);
-	tail = key.substr(i);
-	j = 0;
-	while (j < tail.size() && (tail[j] == ' ' || tail[j] == '\t')) ++j;
-	if (j != tail.size())
-		throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
-	return key;
 }
 
 void Request::parse_body()
