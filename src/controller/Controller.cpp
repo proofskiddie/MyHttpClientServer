@@ -116,7 +116,7 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
         throw ControllerError("`realpath` exited with errors");
     }
 
-    size_t const max_content_length = 50;
+    size_t const max_content_length = 5000;
     char buf[max_content_length];
     memset(buf, 0, max_content_length);
 
