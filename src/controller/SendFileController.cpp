@@ -24,7 +24,7 @@ SendFileController::SendFileController(Config const& config) :
 void SendFileController::run(Request const& req, Response& res) const
 {
 	std::string path;
-	if (resolve_requested_path(req.route, m_config.static_dir, path)) {
+	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
 
 	}
 }
