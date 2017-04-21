@@ -43,9 +43,9 @@ void SendFileController::run(Request const& req, Response& res) const
 
 int SendFileController::get_content_length(std::fstream& fs) const
 {
-	fs.seekg(0, is.end);
+	fs.seekg(0, fs.end);
 	int len = fs.tellg();
-	fs.seekg(0, is.beg);
+	fs.seekg(0, fs.beg);
 	return len;
 }
 
