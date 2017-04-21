@@ -63,7 +63,7 @@ void Controller::send_error_response(Config const& config, TcpConnection* conn, 
 }
 
 bool Controller::resolve_requested_path(std::string const& requested, std::string const& basedir, std::string& resolved) const noexcept {
-	std::string request = real_path(requested);
+	std::string request = real_path(basedir + requested);
 	std::string com_path = real_path(basedir) + requested;
 	bool ret = false;
 	if (!com_path.compare(request)) {
@@ -129,7 +129,7 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
 
     // remove the trailing newline before returning
     std::string content_type(buf);
-    content_type = content_type.substr(0, content_type.size() - 1);
+    content_type = content_type.substr(0, content_type.size());
 
     return content_type;
 }
