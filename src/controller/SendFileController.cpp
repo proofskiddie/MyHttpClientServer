@@ -6,6 +6,7 @@
 #include <sys/wait.h>
 #include <climits>
 #include <cstdlib>
+#include <iostream>
 
 #include "Config.hpp"
 #include "Utils.hpp"
@@ -25,7 +26,7 @@ void SendFileController::run(Request const& req, Response& res) const
 {
 	std::string path;
 	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
-
+		std::cout << path << std::endl;
 	}
 }
 
