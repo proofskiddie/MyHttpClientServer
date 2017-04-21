@@ -32,7 +32,7 @@ public:
     /**
      * Initializes the SendFileController with the given config.
     **/
-    SendFileController(Config const& config, TcpConnection const& conn);
+    SendFileController(Config const& config, TcpConnection & conn);
 
     /**
      * :: TODO ::
