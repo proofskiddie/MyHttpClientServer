@@ -129,7 +129,7 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
 
     // remove the trailing newline before returning
     std::string content_type(buf);
-    content_type = content_type.substr(0, content_type.size());
+    content_type = content_type.substr(0, content_type.size()-1);
 
     return content_type;
 }
