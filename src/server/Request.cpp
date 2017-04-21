@@ -98,14 +98,10 @@ void Request::parse_headers()
 	bool err = false;
 	std::string raw_line;
 	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
-		if (pos = raw_line.find(':'), pos == std::string::npos) 
-			throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
-		else {
-		        size_t pos;
-			if (pos = raw_line.find(':'), pos == std::string::npos)
-				err = true;
-			m_headers[raw_line.substr(0,pos)] = raw_line.substr(pos);
-		}
+		size_t pos;
+		if (pos = raw_line.find(':'), pos == std::string::npos)
+			err = true;
+		m_headers[raw_line.substr(0,pos)] = raw_line.substr(pos);
 	}
 	if (err)
 		throw RequestError(HttpStatus::BadRequest, "Malformed header\n");		
