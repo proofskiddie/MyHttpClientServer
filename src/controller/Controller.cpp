@@ -64,7 +64,9 @@ void Controller::send_error_response(Config const& config, TcpConnection* conn, 
 
 bool Controller::resolve_requested_path(std::string const& requested, std::string const& basedir, std::string& resolved) const noexcept {
 	std::string request = real_path(requested.substr(1));
+	std::cout << request << std::endl;
 	std::string com_path = real_path(basedir) + requested;
+	std::cout << com_path << std::endl;
 	bool ret = false;
 	if (!com_path.compare(request)) {
 		ret = true;
