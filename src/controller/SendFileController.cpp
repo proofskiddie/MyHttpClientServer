@@ -92,11 +92,6 @@ std::string SendFileController::get_content_type(std::string const& filename) co
         throw ControllerError("Error while waiting for finding MIME type to finish");
     }
 
-    if ((WIFEXITED(status) && WEXITSTATUS(status) != 0) || WIFSIGNALED(status))
-    {
-        throw ControllerError("`xdg-mime` exited with errors");
-    }
-
     size_t const max_content_length = 50;
     char buf[max_content_length];
     memset(buf, 0, max_content_length);
