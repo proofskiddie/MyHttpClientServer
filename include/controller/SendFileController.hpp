@@ -18,7 +18,7 @@ private:
      * Whatever this returns can be used when setting the Content-Length header.
     **/
     int get_content_length(std::fstream& fs) const;
-    TcpConnection const& m_conn;
+    TcpConnection & m_conn;
     /**
      * Gets the content type of a given filename.
      * Whatever this returns can be used when setting the Content-Type header.
