@@ -74,6 +74,7 @@ void Server::run_fork() //const
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
 	int pid = fork();
 	if (pid == 0) {
+		std::cout << "AHHHH" << std::cout;
 		handle(conn);
 		delete conn;
 		_exit(0);
