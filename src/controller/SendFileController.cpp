@@ -33,6 +33,7 @@ void SendFileController::run(Request const& req, Response& res) const
 		if (!fs)
 			send_error_response(m_config, &m_conn, HttpStatus::NotFound, req.get_path() + " could not be found");
 		int length = get_content_length(fs);
+		if (length <= 0) return;
 		char *buf = new char[length];
     		res.set_status(HttpStatus::Ok);
 		res.set_header("Content-Type", get_content_type(path));
