@@ -38,7 +38,7 @@ void SendFileController::run(Request const& req, Response& res) const
 		fs.read(buf, length);
 		res.send(buf, length);
 	} else
-		send_error_response(m_config, res.m_conn, HttpStatus::NotFound, path + " could not be found");
+		send_error_response(m_config, &res.m_conn, HttpStatus::NotFound, path + " could not be found");
 }
 
 int SendFileController::get_content_length(std::fstream& fs) const
