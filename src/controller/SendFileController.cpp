@@ -30,14 +30,12 @@ void SendFileController::run(Request const& req, Response& res) const
 		std::fstream fs(path);
 		if (!fs)
 			throw RequestError(HttpStatus::NotFound, "File not found\n");
-		int len = get_content_length(fs);
 		char buf[500];
-		bool ishead = true;
+		res.set_header("Content-Type", get_content_type(path));
+		res.set_header("Content-Length", get_content_length(fs));
 		while (!fs.eof()) {
 			fs.getline(buf, 500);
-			len += fs.gcount();
-			res.send(buf, fs.gcount(), ishead);
-			ishead = false;
+			res.send(buf, fs.gcount());
 		}
 	} else
 		throw RequestError(HttpStatus::NotFound, "File not found\n");
@@ -45,7 +43,10 @@ void SendFileController::run(Request const& req, Response& res) const
 
 int SendFileController::get_content_length(std::fstream& fs) const
 {
-	
+	fs.seekg(0, is.end);
+	int len = fs.tellg();
+	fs.seekg(0, is.beg);
+	return len;
 }
 
 // unfortunately, the only semi-reliable way to get MIME types of files is

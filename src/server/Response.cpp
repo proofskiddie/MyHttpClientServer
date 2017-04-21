@@ -21,7 +21,7 @@ Response::Response(Config const& config, TcpConnection& conn) :
 
 void Response::send(void const* buf, size_t bufsize, bool raw)
 {
-    if(!raw) {
+    if(!raw && !m_headers_sent) {
     	m_conn.puts("HTTP/1.0 " + m_status_text + "\r\n");
     	send_headers();
     }
