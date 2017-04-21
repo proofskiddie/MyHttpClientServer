@@ -38,7 +38,8 @@ void SendFileController::run(Request const& req, Response& res) const
 			res.send(buf, fs.gcount(), ishead);
 			ishead = false;
 		}
-	}
+	} else
+		throw ControllerError(HttpStatus::NotFound, "File not found\n");
 }
 
 int SendFileController::get_content_length(std::fstream& fs) const
