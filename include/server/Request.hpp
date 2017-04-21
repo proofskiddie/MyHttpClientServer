@@ -41,6 +41,7 @@ public:
     std::string m_path;
     std::string m_method;
     std::string m_version;
+    const TcpConnection *m_conn;
 private:
     const Config *m_config;
     const TcpConnection *m_conn;
