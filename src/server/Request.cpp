@@ -100,7 +100,6 @@ void Request::parse_headers()
 		if (pos = raw_line.find(':'), pos == std::string::npos) 
 			throw RequestError(HttpStatus::BadRequest, "Malformed header\n");
 		else {
-		        size_t pos;
 			m_headers[raw_line.substr(0,pos)] = raw_line.substr(pos);
 		}
 	}
