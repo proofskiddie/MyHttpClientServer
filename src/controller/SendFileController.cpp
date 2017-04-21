@@ -15,6 +15,7 @@
 #include "http/HttpStatus.hpp"
 #include "error/ControllerError.hpp"
 #include "error/TodoError.hpp"
+#include "error/RequestError.hpp"
 
 SendFileController::SendFileController(Config const& config) :
     Controller(config)
@@ -28,7 +29,7 @@ void SendFileController::run(Request const& req, Response& res) const
 	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
 		std::fstream fs(path);
 		if (!fs)
-			throw ControllerError(HttpStatus::NotFound, "File not found\n");
+			throw RequestError(HttpStatus::NotFound, "File not found\n");
 		int len = get_content_length(fs);
 		char buf[500];
 		bool ishead = true;
@@ -39,7 +40,7 @@ void SendFileController::run(Request const& req, Response& res) const
 			ishead = false;
 		}
 	} else
-		throw ControllerError(HttpStatus::NotFound, "File not found\n");
+		throw RequestError(HttpStatus::NotFound, "File not found\n");
 }
 
 int SendFileController::get_content_length(std::fstream& fs) const
