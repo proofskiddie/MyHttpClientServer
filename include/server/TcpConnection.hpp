@@ -10,9 +10,9 @@ class TcpConnection
 private:
     Config const& m_config;
     int m_master;
-    int m_conn;
     bool m_shutdown;
 public:
+    int m_conn;
     /**
      * :: TODO ::
      * TcpConnection() calls accept() to acquire a child connection
