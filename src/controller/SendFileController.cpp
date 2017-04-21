@@ -31,6 +31,7 @@ void SendFileController::run(Request const& req, Response& res) const
 		if (!fs)
 			throw RequestError(HttpStatus::NotFound, "File not found\n");
 		char buf[500];
+    		res.set_status(HttpStatus::Ok);
 		res.set_header("Content-Type", get_content_type(path));
 		res.set_header("Content-Length", std::to_string(get_content_length(fs)));
 		while (!fs.eof()) {
