@@ -111,7 +111,7 @@ std::string Request::parse_key(std::string key) {
 	j = i;
 	while (j < key.size() && (key[j] != ' ' && key[j] != '\t')) ++j;
 	key = key.substr(i,j);
-	tail = key.substr(j);
+	tail = key.substr(i);
 	j = 0;
 	while (j < tail.size() && (tail[j] == ' ' || tail[j] == '\t')) ++j;
 	if (j != tail.size())
