@@ -81,8 +81,6 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
         throw ControllerError("Could not create pipe to communicate with `realpath`");
     }
 
-    d_printf("Getting content type. child_stdout = {%d, %d}", child_stdout[0], child_stdout[1]);
-
     pid_t child = fork();
     if (child == -1)
     {
