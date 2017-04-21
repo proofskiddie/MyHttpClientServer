@@ -23,8 +23,10 @@ SendFileController::SendFileController(Config const& config) :
 
 void SendFileController::run(Request const& req, Response& res) const
 {
-	
-	
+	std::string path;
+	if (resolve_requested_path(req.route, m_config.static_dir, path)) {
+
+	}
 }
 
 int SendFileController::get_content_length(std::fstream& fs) const
