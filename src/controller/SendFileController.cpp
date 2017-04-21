@@ -29,7 +29,7 @@ void SendFileController::run(Request const& req, Response& res) const
 	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
 		std::fstream fs(path);
 		if (!fs)
-			throw RequestError(HttpStatus::NotFound, "File not found\n");
+			send_error_response(m_config, m_conn, HttpStatus::NotFound, path + " could not be found");
 		int length = get_content_length(fs);
 		char *buf = new char[length];
     		res.set_status(HttpStatus::Ok);
@@ -38,7 +38,7 @@ void SendFileController::run(Request const& req, Response& res) const
 		fs.read(buf, length);
 		res.send(buf, length);
 	} else
-		throw RequestError(HttpStatus::NotFound, "File not found\n");
+		send_error_response(m_config, m_conn, HttpStatus::NotFound, path + " could not be found");
 }
 
 int SendFileController::get_content_length(std::fstream& fs) const
