@@ -9,6 +9,7 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <limits.h>
+#include <iostream>
 
 #include "controller/Controller.hpp"
 #include "error/ControllerError.hpp"
