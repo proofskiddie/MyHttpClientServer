@@ -26,7 +26,7 @@ void SendFileController::run(Request const& req, Response& res) const
 {
 	std::string path;
 	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
-		FILE fs = fopen(path.c_str(), "r");
+		FILE *fs = fopen(path.c_str(), "r");
 		int len = get_content_length(fs);
 	}
 }
