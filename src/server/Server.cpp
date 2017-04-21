@@ -76,7 +76,7 @@ void Server::run_fork() //const
 	if (pid == 0) {
 		handle(conn);
 		delete conn;
-		exit(0);
+		_exit(0);
 	}
 	delete conn;
     }

@@ -108,11 +108,6 @@ std::string Controller::real_path (std::string const& basedir) const noexcept {
         throw ControllerError("Error while waiting for finding MIME type to finish");
     }
 
-    if ((WIFEXITED(status) && WEXITSTATUS(status) != 0) || WIFSIGNALED(status))
-    {
-        throw ControllerError("`realpath` exited with errors");
-    }
-
     size_t const max_content_length = 5000;
     char buf[max_content_length];
     memset(buf, 0, max_content_length);
