@@ -17,8 +17,9 @@
 #include "error/TodoError.hpp"
 #include "error/RequestError.hpp"
 
-SendFileController::SendFileController(Config const& config) :
-    Controller(config)
+SendFileController::SendFileController(Config const& config, TcpConnection const& conn) :
+    Controller(config),
+    m_conn(conn)
 {
 
 }

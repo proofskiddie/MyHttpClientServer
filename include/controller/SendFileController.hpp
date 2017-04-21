@@ -18,7 +18,7 @@ private:
      * Whatever this returns can be used when setting the Content-Length header.
     **/
     int get_content_length(std::fstream& fs) const;
-
+    TcpConnection const& m_conn;
     /**
      * Gets the content type of a given filename.
      * Whatever this returns can be used when setting the Content-Type header.
@@ -32,7 +32,7 @@ public:
     /**
      * Initializes the SendFileController with the given config.
     **/
-    SendFileController(Config const& config);
+    SendFileController(Config const& config, TcpConnection const& conn);
 
     /**
      * :: TODO ::

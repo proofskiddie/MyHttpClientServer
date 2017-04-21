@@ -13,6 +13,7 @@ class Response
 {
 private:
     Config const& m_config;
+    TcpConnection& m_conn;
     bool m_headers_sent;
     std::string m_status_text;
     /**
@@ -24,7 +25,6 @@ private:
 
     void send_headers();
 public:
-    TcpConnection& m_conn;
     /**
      * The Response constructor doesn't do much of anything on its own.
     **/

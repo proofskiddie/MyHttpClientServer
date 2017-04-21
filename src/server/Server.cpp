@@ -127,7 +127,7 @@ void Server::handle(TcpConnection* conn) //const
         }
         else
         {
-            controller = new SendFileController(*m_config);
+            controller = new SendFileController(*m_config, conn);
         }
 
         // Whatever controller we picked needs to be run with the given request and response
