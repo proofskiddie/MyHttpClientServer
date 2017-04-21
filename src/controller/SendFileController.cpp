@@ -27,7 +27,17 @@ void SendFileController::run(Request const& req, Response& res) const
 	std::string path;
 	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
 		std::fstream fs(path);
+		if (!fs)
+			throw ControllerError(HttpStatus::NotFound, "File not found\n");
 		int len = get_content_length(fs);
+		char buf[500];
+		bool ishead = true;
+		while (!fs.eof()) {
+			fs.getline(buf, 500);
+			len += fs.gcount();
+			res.send(buf, fs.gcount(), ishead);
+			ishead = false;
+		}
 	}
 }
 
