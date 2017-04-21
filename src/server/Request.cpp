@@ -16,65 +16,114 @@
 #include "error/ConnectionError.hpp"
 #include "error/TodoError.hpp"
 
-
-Request::Request(Config const& config, TcpConnection& conn) :
-    m_config(config),
-    m_conn(conn)
-{
-    std::string request_line = parse_raw_line();
-    parse_method(request_line);
-    parse_route(request_line);
-    parse_version(request_line);
-    parse_headers();
-    parse_body();
-    
-    // the previous three parse_* calls should consume the entire line
+Request::Request(Config *config, TcpConnection *conn)
+{ 
+    m_config = config;
+    m_conn = conn;
+    std::string request_line = parse_req_line();
+    if (request_line.size() != 0) {
+	    parse_method(request_line);
+	    parse_route(request_line);
+	    parse_version(request_line);
+	    parse_headers();
+	    parse_body();
+    }
     if (!request_line.empty())
     {
         throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
     }
-
 }
 
 void Request::parse_method(std::string& raw_line)
 {
-    throw TodoError("2", "You have to implement parsing methods");
+	if (!raw_line.substr(0,3).compare("GET")) {
+		m_method = "GET";
+		raw_line = raw_line.substr(3);
+	} else if (!raw_line.substr(0,4).compare("POST")) {
+		m_method = "POST";
+		raw_line = raw_line.substr(4);
+	} else
+		throw RequestError(HttpStatus::MethodNotAllowed, "405 Method Not Allowed\n");
 }
 
 void Request::parse_route(std::string& raw_line)
 {
-    throw TodoError("2", "You have to implement parsing routes");
+	int i = 0;
+	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
+	raw_line = raw_line.substr(i);
+	bool err = false;
+	if (raw_line[0] != '/') err = true;
+	else 
+		for (i = 0; raw_line[i] != ' ' && raw_line[i] != '\t'; ++i)
+			if (raw_line[i] == '\n' || raw_line[i] == '\r')
+				err = true;
+	if (err)
+		throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
+	else {
+		m_path = raw_line.substr(0,i);
+		raw_line = raw_line.substr(i);
+	}	
 }
 
 void Request::parse_querystring(std::string query, std::unordered_map<std::string, std::string>& parsed)
 {
-    throw TodoError("6", "You have to implement parsing querystrings");
 }
 
 void Request::parse_version(std::string& raw_line)
 {
-    throw TodoError("2", "You have to implement parsing HTTP version");
+	int i = 0;
+	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
+	raw_line = raw_line.substr(i);
+	
+	if (!raw_line.substr(0,8).compare("HTTP/1.0")) {
+		m_version = "HTTP/1.0";
+		raw_line = raw_line.substr(8);
+	} else if (!raw_line.substr(0,8).compare("HTTP/1.1")) {
+		m_version = "HTTP/1.1";
+		raw_line = raw_line.substr(8);
+	} else
+		throw RequestError(HttpStatus::HttpVersionNotSupported, "505 HTTP Version Not Supported\n");
+	
+	i = 0;
+	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
+	raw_line = raw_line.substr(i);
+	if (raw_line.substr(0,2).compare("\r\n"))
+		throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
+	raw_line = raw_line.substr(2);
 }
 
 void Request::parse_headers()
 {
-    throw TodoError("2", "You have to implement parsing headers");
+	size_t pos;
+	std::string raw_line;
+	while (raw_line = parse_req_line(), raw_line.compare("\r\n")) {
+		if (pos = raw_line.find(':'), pos == std::string::npos) 
+			throw RequestError(HttpStatus::BadRequest, "Malformed header\n");
+		else {
+			m_headers[raw_line.substr(0,pos)] = raw_line.substr(pos);
+		}
+	}
 }
 
 void Request::parse_body()
 {
     if (m_method == "GET") return;
 
-    throw TodoError("6", "You have to implement parsing request bodies");
 }
 
-std::string Request::parse_raw_line()
-{	
-	int c;
-	std::string s();
-	while (m_conn.getc(&c))
+std::string Request::parse_req_line()
+{
+	unsigned char c;
+	bool brkcond = false;
+	std::string s;
+	while (m_conn->getc(&c)) {
 		s += c;
-	return s;:
+		if (c == '\r') brkcond = true;
+		else if (brkcond && c == '\n') {
+			return s;
+		} else brkcond = false;
+	}
+	return s;
 }
 
 void Request::print() const noexcept
@@ -83,17 +132,17 @@ void Request::print() const noexcept
 #ifdef DEBUG    
     for (auto const& el : m_headers)
     {
-        std::cout << el.first << ": " << el.second << std::endl;
+	std::cout << el.first << ": " << el.second << std::endl;
     }
 
     for (auto const& el : m_query)
     {
-        std::cerr << el.first << ": " << el.second << std::endl;
+	std::cerr << el.first << ": " << el.second << std::endl;
     }
 
     for (auto const& el : m_body_data)
     {
-        std::cerr << el.first << ": " << el.second << std::endl;
+	std::cerr << el.first << ": " << el.second << std::endl;
     }
 #endif	
 }
@@ -102,12 +151,12 @@ bool Request::try_header(std::string const& key, std::string& value) const noexc
 {
     if (m_headers.find(key) == m_headers.end())
     {
-        return false;
+	return false;
     }
     else
     {
-        value = m_headers.at(key);
-        return true;
+	value = m_headers.at(key);
+	return true;
     }
 }
 
