@@ -67,7 +67,7 @@ bool Controller::resolve_requested_path(std::string const& requested, std::strin
 	std::string request = real_path(basedir + requested);
 	std::string com_path = real_path(basedir) + requested;
 	com_path = real_path(com_path);
-	if (!com_path.find("static"))
+	if (!request.find("/static/"))
 		return false;
 	bool ret = false;
 	if (!com_path.compare(request)) {
