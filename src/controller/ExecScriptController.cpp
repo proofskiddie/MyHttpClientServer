@@ -41,7 +41,7 @@ void ExecScriptController::run(Request const& req, Response& res) const
             exit(1);
         }
 	set_environment(req);	
-	const char *path = (config.exec_dir + req.get_path()).c_str();
+	const char *path = (m_config.exec_dir + req.get_path()).c_str();
         execlp(path, path, 0);
         exit(1);
     }
@@ -70,6 +70,7 @@ void ExecScriptController::run(Request const& req, Response& res) const
     // remove the trailing newline before returning
     std::string content_type(buf);
     content_type = content_type.substr(0, content_type.size() - 1);
+	const char *path = (m_config.exec_dir + req.get_path()).c_str();
 	
 		std::fstream fs(path);
 		if (!fs)
