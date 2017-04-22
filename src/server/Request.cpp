@@ -72,7 +72,7 @@ void Request::parse_route(std::string& raw_line)
 		if (err)
 			throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
 		else {
-			parse_querystring(raw_line.substr(0,i), m_query); 
+			parse_querystring(raw_line.substr(1,i), m_query); 
 			raw_line = raw_line.substr(i);
 		}
 	}
@@ -84,7 +84,8 @@ void Request::parse_querystring(std::string query, std::unordered_map<std::strin
 {
 	std::string key;
 	std::string value;
-	for (int i = 0; i < query.size(); ++i) {
+	bool inval = false;
+	for (unsigned int i = 0; i < query.size(); ++i) {
 		if (query[i] == '=')
 			inval = true;
 		else if (query[i] == '&') {
