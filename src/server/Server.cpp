@@ -50,7 +50,7 @@ void Server::run_linear()
     while (true)
     {
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
-        handle(conn);
+       // handle(conn);
         delete conn;
     }
 }
