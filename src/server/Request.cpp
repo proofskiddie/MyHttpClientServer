@@ -49,7 +49,7 @@ void Request::parse_method(std::string& raw_line)
 void Request::parse_route(std::string& raw_line)
 {
 	int i = 0;
-	bool isPost = !m_method.comapre("POST");
+	bool isPost = !m_method.compare("POST");
 	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
 	raw_line = raw_line.substr(i);
 	bool err = false;
