@@ -74,13 +74,6 @@ void ExecScriptController::run(Request const& req, Response& res) const
     res.set_status(HttpStatus::Ok);
     res.set_header("Content-Length", std::to_string(length));
     res.set_header("Content-Type", get_content_type(path));
-    res.send("\r\n", 2);
-    for (auto const& element : req.get_query()) 
-    	err = setenv(("HTTP:QUERY:" + element.first).c_str(), element.second.c_str(), 1); 
-    for (auto const& element : req.get_headers()) 
-    	err = setenv(("HTTP:HEADER:" + element.first).c_str(), element.second.c_str(), 1); 
-    for (auto const& element : req.get_body()) 
-    	err = setenv(("HTTP:BODY:" + element.first).c_str(), element.second.c_str(), 1); 
     res.send(content_type.c_str(), (size_t)content_type.length());
 }
 
