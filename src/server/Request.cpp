@@ -142,7 +142,7 @@ void Request::parse_body()
 	char c;
 	int len = std::stoi(m_headers["Content-Length"]);
 	for (int pos = 0; pos < len; ++pos)
-		raw_line += m_conn.getc(); 
+		raw_line += m_conn->getc(); 
     parse_querystring(raw_line.substr(0,i), m_body); 
 }
 
