@@ -119,7 +119,7 @@ void Server::handle(TcpConnection* conn) //const
         // You only need to change this if you rename your controllers or add more routes
         if (path == "/hello-world")
         {
-            controller = new TextController(*m_config, "Hello world!\n");
+            controller = new TextController(*m_config, "Hello JACK!!!!\n");
         }
         else if (path.find("/script") == 0)
         {
