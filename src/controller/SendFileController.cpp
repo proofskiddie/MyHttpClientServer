@@ -40,6 +40,7 @@ void SendFileController::run(Request const& req, Response& res) const
 		res.set_header("Content-Length", std::to_string(length));
 		fs.read(buf, length);
 		res.send(buf, length);
+		delete [] buf;
 	} else
 		send_error_response(m_config, &m_conn, HttpStatus::NotFound, req.get_path() + " could not be found\n");
 }
