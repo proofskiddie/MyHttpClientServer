@@ -139,11 +139,8 @@ void Request::parse_body()
     if (m_method == "GET") return;
     unsigned char c;
     std::string raw_line;
-    int len = std::stoi(m_headers["Content-Length"]);
-    for (int pos = 0; pos < len; ++pos) {
-        m_conn->getc(&c);
+    while (m_conn->getc(&c))
 	raw_line += c; 
-    }
     parse_querystring(raw_line, m_body_data); 
 }
 

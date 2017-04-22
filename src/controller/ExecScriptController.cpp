@@ -26,7 +26,51 @@ ExecScriptController::ExecScriptController(Config const& config, std::string con
 
 void ExecScriptController::run(Request const& req, Response& res) const
 {
+    int child_stdout[2];
+    if (pipe(child_stdout) == -1)
+    {
+    }
+    pid_t child = fork();
+    if (child == -1)
+    {
+    }
+    if (child == 0)
+    {
+        if (dup2(child_stdout[1], STDOUT_FILENO) == -1)
+        {
+            exit(1);
+        }
+	set_environment(req);	
+	char *path = ("script/" + req.get_path()).c_str();
+        execlp(path, path, 0);
+        exit(1);
+    }
 
+    if (close(child_stdout[1]) == -1)
+    {
+    }
+
+    int status;
+    if (waitpid(child, &status, 0) == -1)
+    {
+    }
+
+    size_t const max_content_length = 500000;
+    char buf[max_content_length];
+    memset(buf, 0, max_content_length);
+
+    if (read(child_stdout[0], buf, max_content_length - 1) == -1)
+    {
+    }
+
+    if (close(child_stdout[0]) == -1)
+    {
+    }
+
+    // remove the trailing newline before returning
+    std::string content_type(buf);
+    content_type = content_type.substr(0, content_type.size() - 1);
+    res.send(buf, buf.size());
 }
 
 bool ExecScriptController::set_environment(Request const& req) const noexcept
