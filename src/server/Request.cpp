@@ -49,12 +49,13 @@ void Request::parse_method(std::string& raw_line)
 void Request::parse_route(std::string& raw_line)
 {
 	int i = 0;
+	bool isPost = !m_method.comapre("POST");
 	while (raw_line[i] == ' ' || raw_line[i] == '\t') ++i;
 	raw_line = raw_line.substr(i);
 	bool err = false;
 	if (raw_line[0] != '/') err = true;
 	else 
-		for (i = 0; raw_line[i] != ' ' && raw_line[i] != '\t'; ++i)
+		for (i = 0; raw_line[i] != ' ' && raw_line[i] != '\t' && (!isPost || raw_line[i] != '?') ; ++i)
 			if (raw_line[i] == '\n' || raw_line[i] == '\r')
 				err = true;
 	if (err)
@@ -62,11 +63,27 @@ void Request::parse_route(std::string& raw_line)
 	else {
 		m_path = raw_line.substr(0,i);
 		raw_line = raw_line.substr(i);
-	}	
+	}
+
+	if (isPost) {
+		for (i = 0; raw_line[i] != ' ' && raw_line[i] != '\t' ; ++i)
+			if (raw_line[i] == '\n' || raw_line[i] == '\r')
+				err = true;
+		if (err)
+			throw RequestError(HttpStatus::BadRequest, "Malformed request-line\n");
+		else {
+			parse_querystring(raw_line.substr(0,i), m_query); 
+			raw_line = raw_line.substr(i);
+		}
+	}
 }
+
+
 
 void Request::parse_querystring(std::string query, std::unordered_map<std::string, std::string>& parsed)
 {
+		
+
 }
 
 void Request::parse_version(std::string& raw_line)
