@@ -50,7 +50,7 @@ void Server::run_linear()
     while (true)
     {
         TcpConnection* conn = new TcpConnection(*m_config, m_master);
-       // handle(conn);
+        handle(conn);
         delete conn;
     }
 }
@@ -132,6 +132,7 @@ void Server::handle(TcpConnection* conn) //const
 
         // Whatever controller we picked needs to be run with the given request and response
         controller->run(*req, res);
+    	delete req;
     }
     catch (RequestError const& e)
     {
