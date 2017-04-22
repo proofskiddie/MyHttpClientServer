@@ -26,6 +26,7 @@ private:
      * Helper function to set all of the correct environment variables for the child process
     **/
     bool set_environment(Request const& req) const noexcept;
+    int get_content_length(std::fstream& fs) const;
 public:
     /**
      * Constructs an ExecScriptController with the given config and ignore path.

@@ -82,6 +82,13 @@ void ExecScriptController::run(Request const& req, Response& res) const
     res.set_header("Content-Type", get_content_type(path));
     res.send(content_type.c_str(), (size_t)content_type.length());
 }
+int ExecScriptController::get_content_length(std::fstream& fs) const
+{
+	fs.seekg(0, fs.end);
+	int len = fs.tellg();
+	fs.seekg(0, fs.beg);
+	return len;
+}
 
 bool ExecScriptController::set_environment(Request const& req) const noexcept
 {
