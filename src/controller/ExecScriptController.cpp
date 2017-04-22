@@ -71,6 +71,8 @@ void ExecScriptController::run(Request const& req, Response& res) const
     std::string content_type(buf);
     content_type = content_type.substr(0, content_type.size() - 1);
 	
+    int length = get_content_length(fs);
+    if (length <= 0) return;
     res.set_status(HttpStatus::Ok);
     res.set_header("Content-Length", std::to_string(length));
     res.set_header("Content-Type", get_content_type(path));
