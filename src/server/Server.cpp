@@ -123,7 +123,7 @@ void Server::handle(TcpConnection* conn) //const
         }
         else if (path.find("/script") == 0)
         {
-            //controller = new ExecScriptController(*m_config, "/script");
+            controller = new ExecScriptController(*m_config, "/script");
         }
         else
         {

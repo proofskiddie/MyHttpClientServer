@@ -26,6 +26,7 @@ ExecScriptController::ExecScriptController(Config const& config, std::string con
 
 void ExecScriptController::run(Request const& req, Response& res) const
 {
+    return;
     int child_stdout[2];
     if (pipe(child_stdout) == -1)
     {
