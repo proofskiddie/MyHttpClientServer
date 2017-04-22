@@ -41,7 +41,7 @@ void ExecScriptController::run(Request const& req, Response& res) const
             exit(1);
         }
 	set_environment(req);	
-	const char *path = ("script/" + req.get_path()).c_str();
+	const char *path = req.get_path().c_str();
         execlp(path, path, 0);
         exit(1);
     }
