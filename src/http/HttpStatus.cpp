@@ -2,7 +2,7 @@
 
 #include "http/HttpStatus.hpp"
 
-HttpStatus::HttpStatus(enum HttpStatusCode code, char const* text) : m_code(code), m_text(text) {}
+HttpStatus::HttpStatus(enum HttpStatusCode code, char const& text) : m_code(code), m_text(text) {}
 
 std::string HttpStatus::to_string() const noexcept
 {

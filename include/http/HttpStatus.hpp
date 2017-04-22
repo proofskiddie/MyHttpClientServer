@@ -24,7 +24,7 @@ private:
     enum HttpStatusCode m_code;
     std::string m_text;
 
-    HttpStatus(enum HttpStatusCode code, char const* text);
+    HttpStatus(enum HttpStatusCode code, char const& text);
 public:
     static HttpStatus const Ok;
     static HttpStatus const BadRequest;
