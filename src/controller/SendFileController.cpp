@@ -41,6 +41,7 @@ void SendFileController::run(Request const& req, Response& res) const
 		fs.read(buf, length);
 		res.send(buf, length);
 		delete [] buf;
+		fs.close();
 	} else
 		send_error_response(m_config, &m_conn, HttpStatus::NotFound, req.get_path() + " could not be found\n");
 }
