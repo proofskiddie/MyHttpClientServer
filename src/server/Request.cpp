@@ -82,7 +82,19 @@ void Request::parse_route(std::string& raw_line)
 
 void Request::parse_querystring(std::string query, std::unordered_map<std::string, std::string>& parsed)
 {
-	std::cout << query << std::endl;	
+	std::string key;
+	std::string value;
+	for (int i = 0; i < query.size(); ++i) {
+		if (query[i] == '=')
+			inval = true;
+		else if (query[i] == '&') {
+			inval = false;
+			parsed[key] = value;
+		} else if (inval)
+			value += query[i];
+		else
+			key += query[i];
+	}
 }
 
 void Request::parse_version(std::string& raw_line)
