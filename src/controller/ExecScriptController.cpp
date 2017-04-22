@@ -26,10 +26,10 @@ ExecScriptController::ExecScriptController(Config const& config, std::string con
 
 void ExecScriptController::run(Request const& req, Response& res) const
 {
-    throw TodoError("6", "You need to implement ExecScriptController");
+
 }
 
 bool ExecScriptController::set_environment(Request const& req) const noexcept
 {
-    throw TodoError("6", "You need to implement setting environment variables for the child process");
+
 }
