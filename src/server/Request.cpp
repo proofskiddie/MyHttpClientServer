@@ -39,9 +39,11 @@ void Request::parse_method(std::string& raw_line)
 	if (!raw_line.substr(0,3).compare("GET")) {
 		m_method = "GET";
 		raw_line = raw_line.substr(3);
+		/*
 	} else if (!raw_line.substr(0,4).compare("POST")) {
 		m_method = "POST";
 		raw_line = raw_line.substr(4);
+	*/
 	} else
 		throw RequestError(HttpStatus::MethodNotAllowed, "405 Method Not Allowed\n");
 }
