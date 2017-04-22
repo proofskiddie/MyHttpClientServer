@@ -70,7 +70,7 @@ void ExecScriptController::run(Request const& req, Response& res) const
     // remove the trailing newline before returning
     std::string content_type(buf);
     content_type = content_type.substr(0, content_type.size() - 1);
-    res.send(buf, buf.size());
+    res.send(content_type, content_type.size());
 }
 
 bool ExecScriptController::set_environment(Request const& req) const noexcept
