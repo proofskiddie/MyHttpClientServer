@@ -137,7 +137,13 @@ void Request::parse_headers()
 void Request::parse_body()
 {
     if (m_method == "GET") return;
-
+	
+	std::string raw_line;
+	char c;
+	int len = std::stoi(m_headers["Content-Length"]);
+	for (int pos = 0; pos < len; ++pos)
+		raw_line += m_conn.getc(); 
+    parse_querystring(raw_line.substr(0,i), m_body); 
 }
 
 std::string Request::parse_req_line()
