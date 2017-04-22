@@ -31,12 +31,14 @@ void ExecScriptController::run(Request const& req, Response& res) const
 
 bool ExecScriptController::set_environment(Request const& req) const noexcept
 {
-    setenv("HTTP:METHOD", "POST", 1);
-    setenv("HTTP:PATH", req.get_path().c_str(), 1);
+    int err;
+    err = setenv("HTTP:METHOD", "POST", 1);
+    err = setenv("HTTP:PATH", req.get_path().c_str(), 1);
     for (auto const& element : req.get_query()) 
-    	setenv(("HTTP:QUERY:" + element.first).c_str(), element.second.c_str(), 1); 
+    	err = setenv(("HTTP:QUERY:" + element.first).c_str(), element.second.c_str(), 1); 
     for (auto const& element : req.get_headers()) 
-    	setenv(("HTTP:HEADER:" + element.first).c_str(), element.second.c_str(), 1); 
+    	err = setenv(("HTTP:HEADER:" + element.first).c_str(), element.second.c_str(), 1); 
     for (auto const& element : req.get_body()) 
-    	setenv(("HTTP:BODY:" + element.first).c_str(), element.second.c_str(), 1); 
+    	err = setenv(("HTTP:BODY:" + element.first).c_str(), element.second.c_str(), 1); 
+    return (err == -1)? false : true;
 }
