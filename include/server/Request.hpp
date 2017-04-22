@@ -14,7 +14,6 @@ public:
      * The Request constructor kicks off the parsing of the incoming request.
     **/
     Request(Config *, TcpConnection *);
-    ~Request() {}
     /**
      * Request::print() is a convenience method that prints the method, path, and version
      * of a request in a consistent way.
