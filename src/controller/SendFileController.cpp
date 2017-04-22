@@ -29,7 +29,6 @@ void SendFileController::run(Request const& req, Response& res) const
 	std::string path;
 	if (req.get_path().empty()) return;
 	if (resolve_requested_path(req.get_path(), m_config.static_dir, path)) {
-		return;
 		std::fstream fs(path);
 		if (!fs)
 			send_error_response(m_config, &m_conn, HttpStatus::NotFound, req.get_path() + " could not be found\n");
