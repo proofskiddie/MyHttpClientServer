@@ -4,9 +4,7 @@
 set -e
 
 # we want to run all tests from the root of the repo
-cd $(git rev-parse --show-toplevel)
-
-make server -j4
+cd "$(git rev-parse --show-toplevel)"
 
 ansi_red="\x1b[31m"
 ansi_green="\x1b[32m"
@@ -19,9 +17,14 @@ host="127.0.0.1"
 http="bin/http"
 port="0"
 attach="false"
-old_path=$PATH
+old_path="$PATH"
 
 export PATH="./:${PATH}"
+
+if ! ps -fu $USER | grep "[b]in/http" > /dev/null 2>&1; then
+    make server
+fi
+
 if [[ "$1" = "-h" || "$1" = "--host" ]]; then
     attach="true"
     host=$(echo $2 | cut -d : -f 1)
@@ -33,7 +36,7 @@ fi
 
 if [[ "$1" = "-e" || "$1" = "--executable" ]]; then
     http="$2"
-    echo "Running new server for each test"
+    echo "Using $2 instead of bin/http for testing"
     shift
     shift
 fi
@@ -67,9 +70,19 @@ function run_http_step {
         $http --port $port --verbose > http-out 2>&1 &
         server_pid=$!
 
-        sleep 0.2
+        sleep 0.5
+
+        if ! ps -fu $USER | grep $server_pid | grep -v grep > /dev/null 2>&1; then
+            echo "Could not start server!"
+            exit 1
+        fi
 
         server_port=$(./get-port.sh $server_pid)
+        if [[ -z $server_port ]]; then
+            echo "Server PID $server_pid is not listening on a port!"
+            exit 1
+        fi
+
         echo "Started server on port $server_port with pid $server_pid"
     fi
 
@@ -82,8 +95,13 @@ function run_http_step {
 
         printf "Running $testcase..."
 
-        if [[ -z "$server_port" ]]; then
-            echo -e "$ansi_red FAILED$ansi_clear Could not start server!"
+        if ! ps -fu $USER | grep $server_pid | grep -v grep > /dev/null 2>&1; then
+            echo -e "Server not running!$ansi_red FAILED$ansi_clear"
+            continue
+        fi
+
+        if [[ -z $server_port ]]; then
+            echo -e "Could not find port of server $server_pid!$ansi_red FAILED$ansi_clear"
             continue
         fi
 

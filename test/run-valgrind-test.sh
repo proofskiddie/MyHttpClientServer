@@ -1,6 +1,6 @@
 #!/bin/bash
 
-root=$(git rev-parse --show-toplevel)
+root="$(git rev-parse --show-toplevel)"
 
 testcase=$1
 http=$2
@@ -14,7 +14,8 @@ results="$1.cmp"
 valgrind --leak-check=full --show-leak-kinds=all --leak-check-heuristics=stdstring --track-fds=yes -v $http $mode > $valout 2>&1 &
 server_pid=$!
 
-sleep 0.5
+# servers take longer to start up in valgrind
+sleep 1.5
 
 isalive=$(ps -u $USER | grep $server_pid | uniq | wc -l)
 
@@ -25,11 +26,16 @@ fi
 
 port=$($root/get-port.sh $server_pid)
 
-printf "Server pid $server_pid running on port $port..."
+printf " Server pid $server_pid running on port $port..."
 
 $root/testall.sh -h 127.0.0.1:$port 2 4 > $testout 2>&1
 
 sleep 0.5
+
+if ! ps -fu $USER | grep $server_pid | grep -v grep > /dev/null 2>&1; then
+    echo "Server crashed during testing"
+    exit 1
+fi
 
 kill $server_pid
 wait $server_pid 2> /dev/null
